@@ -1,0 +1,6 @@
+procs:
+  app:
+    cmd: ["yarn", "dev"]
+
+  caddy:
+    cmd: ["doas", "caddy", "run"]
