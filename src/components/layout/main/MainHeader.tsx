@@ -15,14 +15,14 @@ const NavLink: FC<NavLinkProps> = ({ href, label, subItems }) => {
   const hasSubItems = 1 <= (subItems?.length ?? 0);
 
   return (
-    <li className={cn(hasSubItems && "relative", "group/item")}>
+    <li className={cn(hasSubItems ? ["relative", "group/item"] : undefined)}>
       <Link href={href}>
         <div className="rounded-full border-4 border-black bg-white px-4 py-2 leading-none hover:bg-black hover:text-white">
           {label}
         </div>
       </Link>
       {hasSubItems ? (
-        <ul className="absolute z-10 hidden flex-col gap-1 overflow-clip pt-1 hover:flex group-hover/item:flex">
+        <ul className="absolute z-10 hidden flex-col items-start gap-1 overflow-clip pt-1 hover:flex group-hover/item:flex">
           {subItems!.map((subItem) => (
             <NavLink key={String(subItem.href)} {...subItem} />
           ))}
