@@ -1,0 +1,9 @@
+.container {
+  > input[type="checkbox"]:checked + .title > .arrow {
+    @apply -scale-100;
+  }
+
+  .arrow {
+    @apply transform transition-transform duration-300;
+  }
+}

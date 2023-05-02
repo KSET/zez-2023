@@ -8,7 +8,7 @@ import { DefaultSeo } from "next-seo";
 
 import { MainLayout } from "~/layouts/main";
 import { type NextPageWithLayout } from "~/types/layout";
-import { fontDisplay } from "~/utils/font";
+import { fontDisplay, fontUi } from "~/utils/font";
 import { api } from "~/utils/queryApi";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -25,6 +25,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta content="IE=Edge" httpEquiv="X-UA-Compatible" />
       </Head>
       <DefaultSeo
+        description="Zavod za Eksperimentalni Zvuk - Nit vodilja svih programa je stvoriti prostor za slušati drugačije - ono što je drugačije, one koji su drugačiji i na drugačiji način."
         title="Pregled"
         titleTemplate="ZEZ - %s"
         openGraph={{
@@ -41,7 +42,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         {getLayout ? (
           getLayout(<Component {...pageProps} />)
         ) : (
-          <MainLayout className={fontDisplay.className}>
+          <MainLayout className={(fontUi.className, fontDisplay.variable)}>
             <Component {...pageProps} />
           </MainLayout>
         )}
