@@ -14,7 +14,7 @@ export const MainLayout: FC<PropsWithChildren<{ className?: string }>> = ({
       <MainHeader />
       <div
         className={cn(
-          "relative mt-[54px] grid flex-1 grid-cols-[minmax(0,theme(spacing.96)),minmax(0,1fr)]",
+          "relative mt-[54px] grid flex-1 grid-cols-[minmax(0,2fr),minmax(0,6fr)]",
           fontUi.className,
         )}
       >
