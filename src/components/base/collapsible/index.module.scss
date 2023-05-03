@@ -1,9 +1,46 @@
-.container {
-  > input[type="checkbox"]:checked + .title > .arrow {
-    @apply -scale-100;
+.details {
+  overflow: hidden;
+  @apply overflow-clip transition-[max-height];
+
+  summary {
+    &::-webkit-details-marker {
+      @apply hidden;
+    }
   }
 
-  .arrow {
-    @apply transform transition-transform duration-300;
+  summary.withArrow {
+    @apply relative z-10 cursor-pointer;
+
+    &::after {
+      content: "\2193";
+      font-size: 1.35em;
+      @apply ml-auto mr-4 transform select-none transition-transform;
+    }
+  }
+
+  &[open] {
+    summary.withArrow {
+      &::after {
+        @apply -rotate-180;
+      }
+    }
+  }
+
+  @keyframes accordion-master {
+    from {
+      max-height: var(--accordion-min-height);
+    }
+    to {
+      max-height: var(--accordion-max-height);
+    }
+  }
+
+  @keyframes accordion-close {
+    from {
+      min-height: var(--accordion-max-height);
+    }
+    to {
+      min-height: var(--accordion-min-height);
+    }
   }
 }
