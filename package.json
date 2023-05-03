@@ -19,6 +19,7 @@
     "@trpc/server": "^10.18.0",
     "daisyui": "^2.51.6",
     "jotai": "^2.0.4",
+    "jotai-trpc": "^0.5.1",
     "next": "^13.2.4",
     "next-auth": "^4.21.0",
     "next-seo": "^6.0.0",

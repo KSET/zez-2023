@@ -1742,6 +1742,11 @@ jose@^4.11.4, jose@^4.14.1:
   resolved "https://registry.yarnpkg.com/jose/-/jose-4.14.1.tgz#74f12a621ea2ef850bf0dd8405e2ee4041aea934"
   integrity sha512-SgjXLpP7jhQkUNKL6RpowoR/IF4QKE+WjLDMpNnh2vmhiFs67NftrNpvFtgbwpvRdtueFliahYYWz9E+XZZQlg==
 
+jotai-trpc@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/jotai-trpc/-/jotai-trpc-0.5.1.tgz#a35c97ddeaa22d0fe1fc614aa9bc4eb268c93400"
+  integrity sha512-aRr7HYatqOaeFqYCPJvX1LHGAV3SW+0YhN/YCJcAalmj8enh91n6Dcg9RVfgY4R7NI9CPesZKMcpzd8QlnAvKQ==
+
 jotai@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.0.4.tgz#084accf703e3da768e0dbbeeec740545adca67ca"
