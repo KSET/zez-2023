@@ -1,0 +1,11 @@
+.outline {
+  $text-shadow: ();
+  @for $x from -1 through 1 {
+    @for $y from -1 through 1 {
+      $text-shadow: append($text-shadow, $x * 1px $y * 1px 0 #000, comma);
+    }
+  }
+  text-shadow: $text-shadow;
+
+  // text-shadow: -1px 0 0 black, 1px 0 0 black, 0 -1px 0 black, 0 1px 0 black;
+}

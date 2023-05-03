@@ -1,0 +1,9 @@
+.youtube {
+  :global(.rsme-embed.rsme-youtube-embed) {
+    @apply grid grid-cols-1;
+
+    :global(.youtube-iframe) {
+      @apply h-full;
+    }
+  }
+}
