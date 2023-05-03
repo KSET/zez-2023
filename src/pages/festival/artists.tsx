@@ -137,7 +137,7 @@ const PageFestivalArtists: NextPage = () => {
         }
         `}</style>
       </Head>
-      <div className="mr-10">
+      <div className="mr-[18px]">
         <TagList />
         <ArtistsList />
       </div>
