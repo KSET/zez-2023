@@ -8,7 +8,7 @@ import { AppImage } from "~/components/base/image";
 import { Tag } from "~/components/base/tag";
 import { tags } from "~/store/tags";
 import { api } from "~/utils/jotaiApi";
-import { cn } from "~/utils/style";
+import { cn, escapeSelector } from "~/utils/style";
 
 const atomArtists = api.artists.getAll.atomWithQuery();
 
@@ -83,7 +83,11 @@ const ArtistsList = () => {
     <Animated className="mt-24 flex flex-col gap-24 pb-24">
       {artists.map((artist) => {
         return (
-          <article key={artist.id} className="grid grid-cols-[1fr_20rem] gap-4">
+          <article
+            key={artist.id}
+            className="grid scroll-m-16 grid-cols-[1fr_20rem] gap-4"
+            id={escapeSelector(`artist-${artist.name}`)}
+          >
             <div>
               <h2 className="flex gap-2 text-[54px] leading-[0.8]">
                 <span className="font-bold">{artist.name}</span>
