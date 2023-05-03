@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
-import Link from "next/link";
+import Link, { type LinkProps } from "next/link";
+import { type FC } from "react";
 
 import { escapeSelector } from "~/utils/style";
 
@@ -10,6 +11,34 @@ const artistLink = (name: string) => {
   };
 };
 
+const EventLink: FC<{ name: string; link?: LinkProps["href"] }> = ({
+  name,
+  link,
+}) => {
+  if (!link) {
+    return <>{name}</>;
+  }
+
+  if (typeof link === "string") {
+    return (
+      <a
+        className="underline"
+        href={link}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        {name}
+      </a>
+    );
+  }
+
+  return (
+    <Link className="underline" href={link}>
+      {name}
+    </Link>
+  );
+};
+
 const PageFestivalProgram: NextPage = () => {
   const eventDays = [
     {
@@ -18,6 +47,7 @@ const PageFestivalProgram: NextPage = () => {
         {
           time: "20:00",
           name: "Ulaz",
+          link: "https://www.kset.org/dogadaj/2023-05-03-zez-festival-puce-mary-kenji-araki/",
         },
         {
           time: "21:15",
@@ -41,6 +71,7 @@ const PageFestivalProgram: NextPage = () => {
         {
           time: "20:00",
           name: "Ulaz",
+          link: "https://www.kset.org/dogadaj/2023-05-04-zez-festival-czn-valentina-magaletti-joao-pais-anti-teleological-rock-combo/",
         },
         {
           time: "21:15",
@@ -60,6 +91,7 @@ const PageFestivalProgram: NextPage = () => {
         {
           time: "20:00",
           name: "Ulaz",
+          link: "https://www.kset.org/dogadaj/2023-05-05-zez-festival-felicia-atkinson-manja-ristic/",
         },
         {
           time: "20:45",
@@ -79,10 +111,12 @@ const PageFestivalProgram: NextPage = () => {
         {
           time: "14:00 - 16:00",
           name: "Tarik Haskić: Radionica osviještenog slušanja",
+          link: "https://www.kset.org/dogadaj/2023-05-04-zez-festival-radionica-terenskog-snimanja/",
         },
         {
           time: "21:00",
           name: "Ulaz",
+          link: "https://www.kset.org/dogadaj/2023-04-06-zez-festival-petbrick-bile-eater-osol/",
         },
         {
           time: "21:15",
@@ -129,13 +163,7 @@ const PageFestivalProgram: NextPage = () => {
                     {event.time}{" "}
                     {event.name ? (
                       <strong>
-                        {event.link ? (
-                          <Link className="underline" href={event.link}>
-                            {event.name}
-                          </Link>
-                        ) : (
-                          event.name
-                        )}
+                        <EventLink {...event} />
                       </strong>
                     ) : null}
                   </li>
