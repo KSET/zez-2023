@@ -74,7 +74,7 @@ const PageFestivalProgram: NextPage = () => {
       ],
     },
     {
-      date: "subota 03.05.",
+      date: "subota 06.05.",
       events: [
         {
           time: "14:00 - 16:00",
