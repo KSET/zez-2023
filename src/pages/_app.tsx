@@ -1,6 +1,7 @@
 import "~/styles/globals.css";
 
 import { Provider as JotaiProvider } from "jotai";
+import { type NextPage } from "next";
 import { type AppType } from "next/app";
 import Head from "next/head";
 import { type Session } from "next-auth";
@@ -10,7 +11,7 @@ import { Suspense } from "react";
 
 import { GlobalLoader } from "~/components/base/global-loader";
 import { MainLayout } from "~/layouts/main";
-import { type NextPageWithLayout } from "~/types/layout";
+import { type WithFooter, type WithLayout } from "~/types/layout";
 import { fontDisplay, fontUi } from "~/utils/font";
 import { api } from "~/utils/queryApi";
 
@@ -18,7 +19,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const { getLayout } = Component as NextPageWithLayout;
+  const { getLayout, getFooter } = Component as WithLayout<
+    WithFooter<NextPage>
+  >;
 
   return (
     <>
@@ -52,6 +55,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
                 <Component {...pageProps} />
               </MainLayout>
             )}
+            {getFooter?.()}
           </Suspense>
         </JotaiProvider>
       </SessionProvider>
