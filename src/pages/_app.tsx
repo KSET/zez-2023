@@ -1,10 +1,12 @@
 import "~/styles/globals.css";
 
+import { Provider as JotaiProvider } from "jotai";
 import { type AppType } from "next/app";
 import Head from "next/head";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
+import { Suspense } from "react";
 
 import { MainLayout } from "~/layouts/main";
 import { type NextPageWithLayout } from "~/types/layout";
