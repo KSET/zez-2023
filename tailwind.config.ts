@@ -15,6 +15,14 @@ export default {
       screens: {
         br: "1024px",
       },
+      colors: {
+        green: "#00CC00",
+        orange: "#F47920",
+        pink: "#FF3399",
+        purple: "#A010FD",
+        blue: "#001CCE",
+        "off-black": "#322F31",
+      },
     },
   },
   plugins: [daisyui],
