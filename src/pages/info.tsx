@@ -2,21 +2,14 @@ import { type NextPage } from "next";
 import { NextSeo } from "next-seo";
 
 import ImgVideoPoster from "~/assets/page/index/bg.png";
-import { Button } from "~/components/base/button";
-import { Collapsible } from "~/components/base/collapsible";
+import {
+  CollapsibleLinks,
+  type LinkItem,
+  LinkType,
+} from "~/components/base/collapsible-links";
+import { type WithFooter } from "~/types/layout";
 
-enum LinkType {
-  Facebook = "fb",
-  Instagram = "ig",
-  Spotify = "spotify",
-  Youtube = "yt",
-  Soundcloud = "soundcloud",
-  Bandcamp = "bandcamp",
-  Website = "web",
-  Radio = "radioshow",
-}
-
-const PageInfo: NextPage = () => {
+const PageInfo: WithFooter<NextPage> = () => {
   const links = [
     {
       type: LinkType.Facebook,
@@ -34,16 +27,18 @@ const PageInfo: NextPage = () => {
       type: LinkType.Radio,
       url: "https://open.spotify.com/user/zezfestival",
     },
-  ] satisfies {
-    type: LinkType;
-    url: string;
-  }[];
+    {
+      type: LinkType.Youtube,
+      title: "aftermovie",
+      url: "https://www.youtube-nocookie.com/embed/0i2mWQAOJbo",
+    },
+  ] satisfies LinkItem[];
 
   return (
     <>
       <NextSeo title="Info" />
-      <div className="mx-auto flex max-w-3xl flex-col gap-6 text-2xl">
-        <p className="text-4xl leading-none">
+      <div className="flex max-w-[840px] flex-col gap-4 leading-tight tracking-tight">
+        <p className="text-[42px] leading-[1.1]">
           ZEZ — Zavod za eksperimentalni zvuk ove godine slavi svoju 10.
           obljetnicu. KSET-ov program nesvakidašnje glazbe i avanturističkih
           pristupa zvuku obilježit će rođendan koncertima i događanjima kroz
@@ -72,39 +67,19 @@ const PageInfo: NextPage = () => {
           škaklja maštu.
         </p>
 
-        <Collapsible title={<span className="text-3xl">aftermovie</span>}>
-          <iframe
-            allowFullScreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            className="aspect-video w-full pt-2"
-            frameBorder="0"
-            src="https://www.youtube-nocookie.com/embed/0i2mWQAOJbo"
-            title="ZEZ Festival 2022 - Aftermovie"
-          />
-        </Collapsible>
-
-        {links.length > 0 ? (
-          <div className="mt-36 flex flex-wrap gap-2 text-5xl">
-            {links.map((link) => (
-              <a
-                key={[link.type, link.url].join("$")}
-                href={link.url}
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                <Button>{link.type}</Button>
-              </a>
-            ))}
-          </div>
-        ) : null}
+        <CollapsibleLinks className="text-2xl tracking-tight" links={links} />
       </div>
-
-      <img
-        alt="background"
-        className="mt-52 h-52 w-screen object-cover object-top"
-        src={ImgVideoPoster.src}
-      />
     </>
+  );
+};
+
+PageInfo.getFooter = () => {
+  return (
+    <img
+      alt="background"
+      className="mt-52 h-52 w-screen object-cover object-top"
+      src={ImgVideoPoster.src}
+    />
   );
 };
 
