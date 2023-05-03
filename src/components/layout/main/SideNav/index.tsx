@@ -18,7 +18,17 @@ export type NavLinkProps = {
 const NavLink: FC<NavLinkProps> = ({ href, label, subItems }) => {
   const hasSubItems = 1 <= (subItems?.length ?? 0);
   const router = useRouter();
-  const isActive = router.asPath.startsWith(String(href));
+  const path = router.asPath;
+
+  const active = (link: NavLinkProps): boolean => {
+    if (path.startsWith(String(link.href))) {
+      return true;
+    }
+
+    return link.subItems?.filter(Boolean).some((x) => active(x)) ?? false;
+  };
+
+  const isActive = active({ href, label, subItems });
 
   return (
     <li
