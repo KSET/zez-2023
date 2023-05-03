@@ -8,6 +8,7 @@ import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
 import { Suspense } from "react";
 
+import { GlobalLoader } from "~/components/base/global-loader";
 import { MainLayout } from "~/layouts/main";
 import { type NextPageWithLayout } from "~/types/layout";
 import { fontDisplay, fontUi } from "~/utils/font";
@@ -42,6 +43,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       />
       <SessionProvider session={session}>
         <JotaiProvider>
+          <GlobalLoader />
           <Suspense>
             {getLayout ? (
               getLayout(<Component {...pageProps} />)

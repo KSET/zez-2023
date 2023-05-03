@@ -1,0 +1,74 @@
+@use "sass:math";
+
+@function without-unit($number) {
+  @return math.div($number, $number * 0 + 1);
+}
+
+@function unit-of($number) {
+  @return $number * 0 + 1;
+}
+
+@function wave-mask($wave-height, $wave-size) {
+  $p: without-unit($wave-size * $wave-height) * unit-of($wave-size);
+  $R: math.sqrt(without-unit($p * $p) + without-unit($wave-size * $wave-size)) *
+    unit-of($wave-size);
+
+  $mask: radial-gradient(
+        #{$R} at 50% calc(100% - #{$wave-size + $p}),
+        #000 99%,
+        #0000 101%
+      )
+      calc(50% - #{2 * $wave-size}) 0 / #{4 * $wave-size} 100%,
+    radial-gradient(#{$R} at 50% calc(100% + #{$p}), #0000 99%, #000 101%) 50%
+      calc(100% - #{$wave-size}) / #{4 * $wave-size} 100% repeat-x;
+
+  @return $mask;
+}
+
+.loader {
+  $height: 5rem;
+  $wave-size: 1.2rem;
+  $wave-height: 1.8;
+
+  &.hidden {
+    opacity: 0;
+    margin-top: -0.9rem;
+  }
+
+  @apply pointer-events-none fixed -left-[100%] right-0 z-20 h-20 w-[200%] select-none text-transparent transition-[margin,opacity];
+  top: -3.2rem;
+
+  &::before {
+    @apply absolute inset-0 bg-orange;
+    content: "";
+    mask: wave-mask($wave-height, $wave-size);
+    animation: forwards 1s linear infinite loader-fw;
+  }
+
+  &::after {
+    @apply absolute inset-0 bg-green;
+    content: "";
+    mask: wave-mask($wave-height, $wave-size);
+    animation: forwards 1s linear infinite loader-back;
+  }
+
+  @keyframes loader-fw {
+    from {
+      transform: translate(0, 0);
+    }
+
+    to {
+      transform: translate(#{4 * $wave-size}, 0);
+    }
+  }
+
+  @keyframes loader-back {
+    from {
+      transform: translate(#{4 * $wave-size}, 0);
+    }
+
+    to {
+      transform: translate(0, 0);
+    }
+  }
+}
