@@ -39,13 +39,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
         }}
       />
       <SessionProvider session={session}>
-        {getLayout ? (
-          getLayout(<Component {...pageProps} />)
-        ) : (
-          <MainLayout className={(fontUi.className, fontDisplay.variable)}>
-            <Component {...pageProps} />
-          </MainLayout>
-        )}
+        <JotaiProvider>
+          <Suspense>
+            {getLayout ? (
+              getLayout(<Component {...pageProps} />)
+            ) : (
+              <MainLayout className={(fontUi.className, fontDisplay.variable)}>
+                <Component {...pageProps} />
+              </MainLayout>
+            )}
+          </Suspense>
+        </JotaiProvider>
       </SessionProvider>
     </>
   );
