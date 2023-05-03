@@ -67,10 +67,10 @@ const NavLink: FC<NavLinkProps> = ({ href, label, subItems }) => {
 
 export const SideNav: FC<HTMLProps<HTMLDivElement>> = (props) => {
   const links = [
-    {
-      href: "#/događaji",
-      label: "događaji",
-    },
+    // {
+    //   href: "#/događaji",
+    //   label: "događaji",
+    // },
     {
       href: null,
       label: "festival",
