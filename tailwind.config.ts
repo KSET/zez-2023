@@ -18,4 +18,10 @@ export default {
     },
   },
   plugins: [daisyui],
+
+  daisyui: {
+    themes: false,
+    base: false,
+    logs: false,
+  },
 } satisfies Config;
