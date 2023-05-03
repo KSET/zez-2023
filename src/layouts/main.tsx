@@ -12,8 +12,13 @@ export const MainLayout: FC<PropsWithChildren<{ className?: string }>> = ({
   return (
     <>
       <MainHeader />
-      <div className={cn("relative flex-1", fontUi.className)}>
-        <SideNav className="absolute left-6 top-20 self-start" />
+      <div
+        className={cn(
+          "relative mt-[54px] grid flex-1 grid-cols-[minmax(0,theme(spacing.96)),minmax(0,1fr)]",
+          fontUi.className,
+        )}
+      >
+        <SideNav className="ml-[42px] self-start" />
         <main className={cn("flex flex-1 flex-col", className)}>
           {children}
         </main>

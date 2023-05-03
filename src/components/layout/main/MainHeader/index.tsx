@@ -12,14 +12,14 @@ export type MainHeaderProps = {
 export const MainHeader: FC<MainHeaderProps> = ({ withoutLogo }) => {
   return (
     <header
-      className={cn("mx-16 flex h-36 items-center py-8", fontDisplay.className)}
+      className={cn("mx-10 flex items-center pt-4", fontDisplay.className)}
     >
-      <h1 className="text-2xl uppercase tracking-tight">
-        <Link href="/">Zavod za Eksperimentalni Zvuk</Link>
+      <h1 className="w-48 text-2xl leading-6 tracking-tight">
+        <Link href="/">Zavod za eksperimentalni zvuk</Link>
       </h1>
 
       {!withoutLogo ? (
-        <img alt="ZEZ logo" className="ml-auto h-full" src={ImageZezLogo.src} />
+        <img alt="ZEZ logo" className="ml-auto h-20" src={ImageZezLogo.src} />
       ) : null}
     </header>
   );

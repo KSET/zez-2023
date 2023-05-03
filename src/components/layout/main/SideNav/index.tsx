@@ -76,7 +76,7 @@ export const SideNav: FC<HTMLProps<HTMLDivElement>> = (props) => {
       label: "festival",
       subItems: [
         {
-          href: "#/izvođači",
+          href: "/festival/artists",
           label: "izvođači",
         },
         {
