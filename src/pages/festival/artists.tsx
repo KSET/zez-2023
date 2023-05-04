@@ -160,7 +160,7 @@ const ArtistsList = () => {
           >
             <div>
               <h2 className="flex gap-2 text-[40px] leading-[0.95] br:text-[54px]">
-                <span className="font-bold max-br:flex-1">{artist.name}</span>
+                <span className="font-bold">{artist.name}</span>
                 <span className="uppercase br:flex-1">
                   ({artist.countries.join("/")})
                 </span>
