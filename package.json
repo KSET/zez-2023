@@ -24,6 +24,7 @@
     "next": "^13.2.4",
     "next-auth": "^4.21.0",
     "next-seo": "^6.0.0",
+    "rc-drawer": "^6.1.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",

@@ -31,7 +31,7 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
       {...props}
       type="button"
       className={cn(
-        "rounded-full border border-black stroke-black px-3 py-1 text-2xl font-medium uppercase leading-none tracking-widest text-white",
+        "rounded-full border border-black stroke-black px-3 py-[2px] text-xl font-semibold uppercase leading-none tracking-widest text-white br:px-3 br:py-0 br:text-2xl",
         asDisplay && "cursor-text",
         !asDisplay && "hover:border-off-black hover:!bg-black",
         color === TagColor.Green && "bg-green",

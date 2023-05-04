@@ -1,9 +1,12 @@
 import { atom, useAtom, useAtomValue } from "jotai";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { type FC, useMemo } from "react";
+import { type FC, useMemo, useState } from "react";
 
+import ImageIconFilter from "~/assets/page/festival/artists/icon-filter.svg";
 import { Animated } from "~/components/base/animated";
+import { Button } from "~/components/base/button";
+import { AppDrawer } from "~/components/base/drawer";
 import { AppImage } from "~/components/base/image";
 import { Tag } from "~/components/base/tag";
 import { tags } from "~/store/tags";
@@ -25,40 +28,107 @@ const TagList: FC = () => {
     return !Object.entries(selected).some((x) => x[1]);
   }, [selected]);
   const tags = useAtomValue(atomTags);
+  const [tagSelectorOpen, setTagSelectorOpen] = useState(false);
 
   return (
     <>
-      <div className="flex flex-wrap">
-        {tags.map((tag) => {
-          return (
-            <Tag
-              key={tag.name}
-              color={tag.color}
-              selected={selected[tag.name]}
-              onClick={() => {
-                setSelected((prev) => ({
-                  ...prev,
-                  [tag.name]: !prev[tag.name],
-                }));
-              }}
-            >
-              {tag.name}
-            </Tag>
-          );
-        })}
+      <div className="max-br:hidden">
+        <div className="flex flex-wrap">
+          {tags.map((tag) => {
+            return (
+              <Tag
+                key={tag.name}
+                color={tag.color}
+                selected={selected[tag.name]}
+                onClick={() => {
+                  setSelected((prev) => ({
+                    ...prev,
+                    [tag.name]: !prev[tag.name],
+                  }));
+                }}
+              >
+                {tag.name}
+              </Tag>
+            );
+          })}
+        </div>
+        <div className="mt-2">
+          <span
+            tabIndex={0}
+            className={cn(
+              "cursor-pointer underline",
+              noneSelected &&
+                "pointer-events-none select-none opacity-0 transition-opacity",
+            )}
+            onClick={() => setSelected({})}
+          >
+            Poništi
+          </span>
+        </div>
       </div>
-      <div className="mt-2">
-        <span
-          tabIndex={0}
-          className={cn(
-            "cursor-pointer underline",
-            noneSelected &&
-              "pointer-events-none select-none opacity-0 transition-opacity",
-          )}
-          onClick={() => setSelected({})}
+      <div className="flex items-center tracking-tight br:hidden">
+        <h1 className="text-2xl">Svi izvođači</h1>
+
+        <Button
+          className="ml-auto flex-row text-2xl"
+          onClick={() => {
+            setTagSelectorOpen((prev) => !prev);
+          }}
         >
-          Poništi
-        </span>
+          <span className="flex items-center gap-2 py-0.5">
+            Filtriraj
+            <img
+              alt="filtriraj"
+              className="inline-block"
+              src={(ImageIconFilter as { src: string }).src}
+            />
+          </span>
+        </Button>
+
+        <AppDrawer open={tagSelectorOpen} onChange={setTagSelectorOpen}>
+          <div className="relative mt-2 flex h-full flex-col text-center text-2xl tracking-tight">
+            <button
+              className="absolute left-0 text-[#c5c5c5]"
+              type="button"
+              onClick={() => setTagSelectorOpen(false)}
+            >
+              Natrag
+            </button>
+            <h1 className="mx-auto">Filtriraj</h1>
+
+            <div className="flex flex-1 items-center">
+              <div className="flex flex-1 flex-wrap gap-y-3">
+                {tags.map((tag) => {
+                  return (
+                    <Tag
+                      key={tag.name}
+                      className="px-3"
+                      color={tag.color}
+                      selected={selected[tag.name]}
+                      onClick={() => {
+                        setSelected((prev) => ({
+                          ...prev,
+                          [tag.name]: !prev[tag.name],
+                        }));
+                      }}
+                    >
+                      {tag.name}
+                    </Tag>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="mt-auto flex">
+              <Button
+                className="w-full text-[42px] leading-none text-[#8e8e8e]"
+                onClick={() => setTagSelectorOpen(false)}
+              >
+                odaberi
+              </Button>
+            </div>
+          </div>
+        </AppDrawer>
       </div>
     </>
   );
@@ -80,18 +150,18 @@ const ArtistsList = () => {
   }, [allArtists, selected]);
 
   return (
-    <Animated className="mt-24 flex flex-col gap-24 pb-24">
+    <Animated className="my-5 flex flex-col gap-16 br:my-24 br:gap-24">
       {artists.map((artist) => {
         return (
           <article
             key={artist.id}
-            className="grid scroll-m-16 grid-cols-[1fr_20rem] gap-4"
+            className="flex scroll-m-16 flex-col-reverse gap-4 tracking-tight br:grid br:grid-cols-[1fr_20rem]"
             id={escapeSelector(`artist-${artist.name}`)}
           >
             <div>
-              <h2 className="flex gap-2 text-[54px] leading-[0.8]">
-                <span className="font-bold">{artist.name}</span>
-                <span className="flex-1 uppercase">
+              <h2 className="flex gap-2 text-[40px] leading-[0.95] br:text-[54px]">
+                <span className="font-bold max-br:flex-1">{artist.name}</span>
+                <span className="uppercase br:flex-1">
                   ({artist.countries.join("/")})
                 </span>
               </h2>
@@ -108,7 +178,7 @@ const ArtistsList = () => {
                 dangerouslySetInnerHTML={{
                   __html: artist.description,
                 }}
-                className="mt-6 flex flex-col gap-2 leading-5"
+                className="mt-6 flex flex-col gap-1.5 leading-5 br:gap-2"
               />
             </div>
             <AppImage
@@ -137,7 +207,7 @@ const PageFestivalArtists: NextPage = () => {
         }
         `}</style>
       </Head>
-      <div className="mr-[18px]">
+      <div className="br:mr-[18px]">
         <TagList />
         <ArtistsList />
       </div>

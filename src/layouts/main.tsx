@@ -15,7 +15,7 @@ export const mainLayout: Layout = (page, footer) => {
           fontDisplay.variable,
         )}
       >
-        <SideNav className="ml-[18px] self-start" />
+        <SideNav className="ml-[18px] self-start max-br:!hidden" />
         <main className={cn("flex flex-1 flex-col")}>{page}</main>
       </div>
       {footer?.()}

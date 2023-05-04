@@ -38,7 +38,7 @@ const PageInfo: WithFooter<NextPage> = () => {
     <>
       <NextSeo title="Info" />
       <div className="flex max-w-[840px] flex-col gap-4 leading-tight tracking-tight">
-        <p className="text-[42px] leading-[1.1]">
+        <p className="text-3xl leading-none br:text-[42px] br:leading-[1.1]">
           ZEZ — Zavod za eksperimentalni zvuk ove godine slavi svoju 10.
           obljetnicu. KSET-ov program nesvakidašnje glazbe i avanturističkih
           pristupa zvuku obilježit će rođendan koncertima i događanjima kroz
