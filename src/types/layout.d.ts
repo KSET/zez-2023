@@ -1,12 +1,15 @@
 import type { NextPage as NextPage_ } from "next";
 import type { ReactElement, ReactNode } from "react";
 
+export type LayoutFooter = () => ReactNode;
+export type Layout = (page: ReactElement, footer?: LayoutFooter) => ReactNode;
+
 type WithLayout<TPage extends NextPage<unknown, unknown>> = TPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: Layout;
 };
 
 type WithFooter<TPage extends NextPage<unknown, unknown>> = TPage & {
-  getFooter?: () => ReactNode;
+  getFooter?: LayoutFooter;
 };
 
 type NextPageWithLayout<TProps = unknown, TInitialProps = TProps> = WithLayout<

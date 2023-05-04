@@ -10,9 +10,8 @@ import { DefaultSeo } from "next-seo";
 import { Suspense } from "react";
 
 import { GlobalLoader } from "~/components/base/global-loader";
-import { MainLayout } from "~/layouts/main";
+import { mainLayout } from "~/layouts/main";
 import { type WithFooter, type WithLayout } from "~/types/layout";
-import { fontDisplay, fontUi } from "~/utils/font";
 import { api } from "~/utils/queryApi";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -22,6 +21,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
   const { getLayout, getFooter } = Component as WithLayout<
     WithFooter<NextPage>
   >;
+
+  const layout = getLayout ?? mainLayout;
 
   return (
     <>
@@ -47,16 +48,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       <SessionProvider session={session}>
         <JotaiProvider>
           <GlobalLoader />
-          <Suspense>
-            {getLayout ? (
-              getLayout(<Component {...pageProps} />)
-            ) : (
-              <MainLayout className={(fontUi.className, fontDisplay.variable)}>
-                <Component {...pageProps} />
-              </MainLayout>
-            )}
-            {getFooter?.()}
-          </Suspense>
+          <Suspense>{layout(<Component {...pageProps} />, getFooter)}</Suspense>
         </JotaiProvider>
       </SessionProvider>
     </>

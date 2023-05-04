@@ -1,28 +1,24 @@
-import { type FC, type PropsWithChildren } from "react";
-
 import { MainHeader } from "~/components/layout/main/MainHeader";
 import { SideNav } from "~/components/layout/main/SideNav";
-import { fontUi } from "~/utils/font";
+import { type Layout } from "~/types/layout";
+import { fontDisplay, fontUi } from "~/utils/font";
 import { cn } from "~/utils/style";
 
-export const MainLayout: FC<PropsWithChildren<{ className?: string }>> = ({
-  children,
-  className,
-}) => {
+export const mainLayout: Layout = (page, footer) => {
   return (
     <>
       <MainHeader />
       <div
         className={cn(
-          "relative mx-6 mt-[54px] grid flex-1 grid-cols-[minmax(0,2fr),minmax(0,6fr)] gap-5",
+          "relative mx-6 mt-[54px] flex-1 gap-5 br:grid br:grid-cols-[minmax(0,2fr),minmax(0,6fr)]",
           fontUi.className,
+          fontDisplay.variable,
         )}
       >
         <SideNav className="ml-[18px] self-start" />
-        <main className={cn("flex flex-1 flex-col", className)}>
-          {children}
-        </main>
+        <main className={cn("flex flex-1 flex-col")}>{page}</main>
       </div>
+      {footer?.()}
     </>
   );
 };
