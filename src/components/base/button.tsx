@@ -16,7 +16,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       {...props}
       type="button"
       className={cn(
-        "flex overflow-clip rounded-full border-[3px] border-current bg-white px-3 py-[1px] leading-none tracking-tight max-br:hover:bg-black max-br:hover:text-white",
+        "flex overflow-clip rounded-full border-[3px] border-black bg-white px-3 py-[1px] leading-none tracking-tight hover:bg-black hover:text-white",
         active && "bg-black text-white",
         props.className,
       )}

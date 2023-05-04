@@ -121,7 +121,7 @@ const TagList: FC = () => {
 
             <div className="mt-auto flex">
               <Button
-                className="w-full text-[42px] leading-none text-[#8e8e8e]"
+                className="w-full border-[#8e8e8e] text-[42px] leading-none text-[#8e8e8e]"
                 onClick={() => setTagSelectorOpen(false)}
               >
                 odaberi
