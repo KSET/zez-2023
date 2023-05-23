@@ -9,3 +9,13 @@
 
   // text-shadow: -1px 0 0 black, 1px 0 0 black, 0 -1px 0 black, 0 1px 0 black;
 }
+
+.hover {
+  @media screen and (pointer: fine) and (hover: hover) {
+    &:hover {
+      @apply border-off-black;
+      background-color: black !important;
+      color: white !important;
+    }
+  }
+}

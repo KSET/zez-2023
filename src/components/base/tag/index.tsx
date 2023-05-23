@@ -33,7 +33,7 @@ export const Tag: FC<PropsWithChildren<TagProps>> = ({
       className={cn(
         "rounded-full border border-black stroke-black px-3 py-[2px] text-xl font-semibold uppercase leading-none tracking-widest text-white br:px-3 br:py-0 br:text-2xl",
         asDisplay && "cursor-text",
-        !asDisplay && "hover:border-off-black hover:!bg-black",
+        !asDisplay && $style.hover,
         color === TagColor.Green && "bg-green",
         color === TagColor.Orange && "bg-orange",
         color === TagColor.Purple && "bg-purple",
