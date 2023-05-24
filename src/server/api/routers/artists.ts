@@ -9,6 +9,7 @@ import ImageOSOL from "~/assets/page/tmp/festival/artists/OSOL.png.jpg";
 import ImagePETBRICK from "~/assets/page/tmp/festival/artists/PETBRICK.png.jpg";
 import ImagePruceMary from "~/assets/page/tmp/festival/artists/Pruce Mary.png.jpg";
 import ImageTheAntiTeleologicalRockCombo from "~/assets/page/tmp/festival/artists/The Anti-Teleological Rock Combo.png.jpg";
+import { LinkType } from "~/components/base/collapsible-links";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { type Artist } from "~/store/artists";
 
@@ -48,6 +49,20 @@ const artists = [
     </p>
     `.trim(),
     image: ImagePruceMary,
+    links: [
+      {
+        type: LinkType.Bandcamp,
+        url: "https://puce-mary.bandcamp.com/",
+      },
+      {
+        type: LinkType.Youtube,
+        url: "https://www.youtube.com/watch?v=K248GTJrpA0",
+      },
+      {
+        type: LinkType.Instagram,
+        url: "https://www.instagram.com/_muldvarp_/",
+      },
+    ],
   },
   {
     id: ++i,
@@ -65,6 +80,28 @@ const artists = [
     </p>
     `.trim(),
     image: ImageKenjiAraki,
+    links: [
+      {
+        type: LinkType.Youtube,
+        url: "https://www.youtube.com/watch?v=f2yw3Q2KJwc",
+      },
+      {
+        type: LinkType.Bandcamp,
+        url: "https://kenjiaraki.bandcamp.com/album/leidenzwang",
+      },
+      {
+        type: LinkType.Facebook,
+        url: "https://www.facebook.com/j.kenjiaraki",
+      },
+      {
+        type: LinkType.Website,
+        url: "https://sites.google.com/view/kenjiaraki",
+      },
+      {
+        type: LinkType.Instagram,
+        url: "https://www.instagram.com/j.kenjiaraki/",
+      },
+    ],
   },
   {
     id: ++i,
@@ -91,6 +128,24 @@ const artists = [
     </p>
     `.trim(),
     image: ImageFeliciaAtkinson,
+    links: [
+      {
+        type: LinkType.Youtube,
+        url: "https://www.youtube.com/watch?v=2NABQaiVPhA&t=510s",
+      },
+      {
+        type: LinkType.Instagram,
+        url: "https://www.instagram.com/felicia_atkinson/",
+      },
+      {
+        type: LinkType.Bandcamp,
+        url: "https://feliciaatkinson.bandcamp.com/",
+      },
+      {
+        type: LinkType.Website,
+        url: "https://shelter-press.com/felicia-atkinson-image-language/",
+      },
+    ],
   },
   {
     id: ++i,
@@ -108,6 +163,20 @@ const artists = [
     </p>
     `.trim(),
     image: ImageManjaRistic,
+    links: [
+      {
+        type: LinkType.Website,
+        url: "https://manjaristic.blogspot.com/",
+      },
+      {
+        type: LinkType.Soundcloud,
+        url: "https://soundcloud.com/manja-ristic",
+      },
+      {
+        type: LinkType.Facebook,
+        url: "https://www.facebook.com/maaanjaaaa",
+      },
+    ],
   },
   {
     id: ++i,
@@ -132,6 +201,24 @@ const artists = [
     </p>
     `.trim(),
     image: ImageCZN,
+    links: [
+      {
+        type: LinkType.Youtube,
+        url: "https://www.youtube.com/watch?v=h47VZozfDcw",
+      },
+      {
+        type: LinkType.Bandcamp,
+        url: "https://czndrums.bandcamp.com/",
+      },
+      {
+        type: LinkType.Facebook,
+        url: "https://www.facebook.com/czndrums/",
+      },
+      {
+        type: LinkType.Website,
+        url: "https://valentinamagaletti.com/",
+      },
+    ],
   },
   {
     id: ++i,
@@ -172,6 +259,30 @@ const artists = [
     </p>
     `.trim(),
     image: ImagePETBRICK,
+    links: [
+      {
+        type: LinkType.Youtube,
+        title: "Petbrick - Primer",
+        url: "https://www.youtube.com/watch?v=eCG7UyDR3yE",
+      },
+      {
+        type: LinkType.Youtube,
+        title: "Petbrick LIVE",
+        url: "https://www.youtube.com/watch?v=zmGvT_lgP7o",
+      },
+      {
+        type: LinkType.Bandcamp,
+        url: "https://petbrick.bandcamp.com/album/liminal",
+      },
+      {
+        type: LinkType.Facebook,
+        url: "https://www.facebook.com/petbrickband/",
+      },
+      {
+        type: LinkType.Instagram,
+        url: "https://www.instagram.com/petbricknoise/",
+      },
+    ],
   },
   {
     id: ++i,
@@ -186,6 +297,12 @@ const artists = [
     </p>
     `.trim(),
     image: ImageBileEater,
+    links: [
+      {
+        type: LinkType.Youtube,
+        url: "https://www.youtube.com/watch?v=bXQT0mU2DWw",
+      },
+    ],
   },
   {
     id: ++i,
@@ -198,6 +315,12 @@ const artists = [
     </p>
     `.trim(),
     image: ImageOSOL,
+    links: [
+      {
+        type: LinkType.Youtube,
+        url: "https://www.youtube.com/watch?v=49dwzAWh2Iw",
+      },
+    ],
   },
   {
     id: ++i,
@@ -215,6 +338,16 @@ const artists = [
     </p>
     `.trim(),
     image: ImageLilacube,
+    links: [
+      {
+        type: LinkType.Youtube,
+        url: "https://www.youtube.com/watch?v=49dwzAWh2Iw",
+      },
+      {
+        type: LinkType.Soundcloud,
+        url: "https://soundcloud.com/lila_cube",
+      },
+    ],
   },
   {
     id: ++i,
@@ -233,6 +366,12 @@ const artists = [
     </p>
     `.trim(),
     image: ImageDJExtinction,
+    links: [
+      {
+        type: LinkType.Soundcloud,
+        url: "https://soundcloud.com/djextinction",
+      },
+    ],
   },
 ] satisfies Artist[];
 

@@ -1,4 +1,4 @@
-import { type LinkType } from "~/components/base/collapsible-links";
+import { type LinkItem } from "~/components/base/collapsible-links";
 
 import { type TagName } from "./tags";
 
@@ -14,5 +14,5 @@ export type Artist = {
     height?: number;
     blurDataURL?: string;
   };
-  links?: { type: LinkType; url: string }[];
+  links?: LinkItem[];
 };
