@@ -31,9 +31,11 @@ import { ZodError } from "zod";
 import { getServerAuthSession } from "~/server/auth";
 import { prisma } from "~/server/db";
 
+type ServerReqRes = Pick<GetServerSidePropsContext, "req" | "res">;
+
 type CreateContextOptions = {
   session: Session | null;
-};
+} & Partial<ServerReqRes>;
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -49,6 +51,8 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
     prisma,
+    req: opts.req ?? null,
+    res: opts.res ?? null,
   };
 };
 
@@ -61,15 +65,15 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
 export const createTRPCContext = async (opts: CreateNextContextOptions) =>
   createServerTRPCContext(opts);
 
-export const createServerTRPCContext = async (
-  opts: Pick<GetServerSidePropsContext, "req" | "res">,
-) => {
+export const createServerTRPCContext = async (opts: ServerReqRes) => {
   const { req, res } = opts;
 
   const session = await getServerAuthSession({ req, res });
 
   return createInnerTRPCContext({
     session,
+    req,
+    res,
   });
 };
 
