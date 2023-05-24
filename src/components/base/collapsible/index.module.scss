@@ -13,8 +13,7 @@
 
     &::after {
       content: "\2193";
-      font-size: 1.35em;
-      @apply ml-auto mr-4 transform select-none transition-transform;
+      @apply ml-auto mr-4 scale-125 transform select-none transition-transform;
     }
   }
 
