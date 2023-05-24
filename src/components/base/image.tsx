@@ -31,7 +31,7 @@ export type ImageProps = {
   onLoad?: (src: string | null | undefined) => void;
 };
 
-export const AppImage: FC<ImageProps> = ({
+export const AppImage: FC<ImageProps & { className?: string }> = ({
   src,
   alt,
   lazySrc,
@@ -39,6 +39,7 @@ export const AppImage: FC<ImageProps> = ({
   observerOptions,
   cover,
   onLoad,
+  className,
 }) => {
   const imgEl = useRef<HTMLImageElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -92,7 +93,7 @@ export const AppImage: FC<ImageProps> = ({
   }, [isVisible, lazySrc, src]);
 
   return (
-    <AspectRatio ratio={aspectRatio}>
+    <AspectRatio className={className} ratio={aspectRatio}>
       <picture
         className={cn(
           "h-full w-full",
