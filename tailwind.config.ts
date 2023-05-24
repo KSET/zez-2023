@@ -1,5 +1,6 @@
 import daisyui from "daisyui";
 import { type Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -25,7 +26,16 @@ export default {
       },
     },
   },
-  plugins: [daisyui],
+  plugins: [
+    daisyui,
+    plugin((api) => {
+      api.addVariant("pointer-coarse", "@media (pointer: coarse)");
+      api.addVariant("pointer-fine", "@media (pointer: fine)");
+      api.addVariant("pointer-none", "@media (pointer: none)");
+      api.addVariant("hover-hover", "@media (hover: hover)");
+      api.addVariant("hover-none", "@media (hover: none)");
+    }),
+  ],
 
   daisyui: {
     themes: false,
