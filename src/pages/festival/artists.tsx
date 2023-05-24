@@ -1,11 +1,12 @@
 import { atom, useAtom, useAtomValue } from "jotai";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { type FC, useMemo, useState } from "react";
+import { type FC, useEffect, useMemo, useState } from "react";
 
 import ImageIconFilter from "~/assets/page/festival/artists/icon-filter.svg";
 import { Animated } from "~/components/base/animated";
 import { Button } from "~/components/base/button";
+import { CollapsibleLinks } from "~/components/base/collapsible-links";
 import { AppDrawer } from "~/components/base/drawer";
 import { AppImage } from "~/components/base/image";
 import { Tag } from "~/components/base/tag";
@@ -21,6 +22,92 @@ const atomTags = atom(
     .sort((lt, gt) => lt.name.localeCompare(gt.name)),
 );
 const atomSelected = atom({} as Record<string, boolean>);
+
+const MobileTagList = ({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}) => {
+  const tags = useAtomValue(atomTags);
+  const [globalSelected, setGlobalSelected] = useAtom(atomSelected);
+  const [selected, setSelected] = useState(globalSelected);
+
+  const anySelected = useMemo(() => {
+    return Object.values(selected).some(Boolean);
+  }, [selected]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSelected(globalSelected);
+    }
+  }, [globalSelected, isOpen]);
+
+  return (
+    <AppDrawer open={isOpen} onChange={setIsOpen}>
+      <div className="relative mt-2 flex h-full flex-col gap-5 text-center text-2xl tracking-tight">
+        <div>
+          <button
+            className="absolute left-0 text-[#c5c5c5]"
+            type="button"
+            onClick={() => setIsOpen(false)}
+          >
+            Natrag
+          </button>
+          <h1 className="mx-auto">Filtriraj</h1>
+        </div>
+
+        <div className="flex flex-1 items-center">
+          <div className="flex flex-1 flex-wrap gap-y-3">
+            {tags.map((tag) => {
+              return (
+                <Tag
+                  key={tag.name}
+                  className="px-3 sm:!text-sm"
+                  color={tag.color}
+                  selected={selected[tag.name]}
+                  onClick={() => {
+                    setSelected((prev) => ({
+                      ...prev,
+                      [tag.name]: !prev[tag.name],
+                    }));
+                  }}
+                >
+                  {tag.name}
+                </Tag>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-auto flex pb-6 text-[42px]">
+          {anySelected ? (
+            <Button
+              plain
+              square
+              className="items-center border-b-[3px]"
+              onClick={() => {
+                setSelected({});
+              }}
+            >
+              poništi
+            </Button>
+          ) : null}
+          <Button
+            className="ml-auto leading-none"
+            onClick={() => {
+              setGlobalSelected(selected);
+              setIsOpen(false);
+            }}
+          >
+            odaberi
+          </Button>
+        </div>
+      </div>
+    </AppDrawer>
+  );
+};
 
 const TagList: FC = () => {
   const [selected, setSelected] = useAtom(atomSelected);
@@ -85,50 +172,10 @@ const TagList: FC = () => {
           </span>
         </Button>
 
-        <AppDrawer open={tagSelectorOpen} onChange={setTagSelectorOpen}>
-          <div className="relative mt-2 flex h-full flex-col text-center text-2xl tracking-tight">
-            <button
-              className="absolute left-0 text-[#c5c5c5]"
-              type="button"
-              onClick={() => setTagSelectorOpen(false)}
-            >
-              Natrag
-            </button>
-            <h1 className="mx-auto">Filtriraj</h1>
-
-            <div className="flex flex-1 items-center">
-              <div className="flex flex-1 flex-wrap gap-y-3">
-                {tags.map((tag) => {
-                  return (
-                    <Tag
-                      key={tag.name}
-                      className="px-3"
-                      color={tag.color}
-                      selected={selected[tag.name]}
-                      onClick={() => {
-                        setSelected((prev) => ({
-                          ...prev,
-                          [tag.name]: !prev[tag.name],
-                        }));
-                      }}
-                    >
-                      {tag.name}
-                    </Tag>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="mt-auto flex">
-              <Button
-                className="w-full !border-[#8e8e8e] text-[42px] leading-none text-[#8e8e8e]"
-                onClick={() => setTagSelectorOpen(false)}
-              >
-                odaberi
-              </Button>
-            </div>
-          </div>
-        </AppDrawer>
+        <MobileTagList
+          isOpen={tagSelectorOpen}
+          setIsOpen={setTagSelectorOpen}
+        />
       </div>
     </>
   );
@@ -155,10 +202,10 @@ const ArtistsList = () => {
         return (
           <article
             key={artist.id}
-            className="flex scroll-m-16 flex-col-reverse gap-4 tracking-tight br:grid br:grid-cols-[1fr_20rem]"
+            className="flex scroll-m-16 flex-col gap-4 tracking-tight br:grid br:grid-cols-[1fr_20rem]"
             id={escapeSelector(`artist-${artist.name}`)}
           >
-            <div>
+            <div className="order-2 br:order-1">
               <h2 className="flex gap-2 text-[40px] leading-[0.95] br:text-[54px]">
                 <span className="font-bold">{artist.name}</span>
                 <span className="uppercase br:flex-1">
@@ -184,12 +231,18 @@ const ArtistsList = () => {
             <AppImage
               alt={artist.name}
               aspectRatio={325 / 260}
+              className="order-1 br:order-2"
               lazySrc={artist.image.blurDataURL}
               src={artist.image.src}
               observerOptions={{
                 rootMargin: "128px",
               }}
             />
+            {(artist.links?.length ?? 0) > 0 ? (
+              <div className="order-3 flex-1">
+                <CollapsibleLinks links={artist.links!} />
+              </div>
+            ) : null}
           </article>
         );
       })}

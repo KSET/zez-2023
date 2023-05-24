@@ -10,13 +10,13 @@ export const mainLayout: Layout = (page, footer) => {
       <MainHeader />
       <div
         className={cn(
-          "relative mx-6 mt-[54px] flex-1 gap-5 br:grid br:grid-cols-[minmax(0,2fr),minmax(0,6fr)]",
+          "container relative mx-auto mt-[54px] flex-1 gap-5 br:grid br:grid-cols-[minmax(0,2fr),minmax(0,6fr)]",
           fontUi.className,
           fontDisplay.variable,
         )}
       >
-        <SideNav className="ml-[18px] self-start max-br:!hidden" />
-        <main className={cn("flex flex-1 flex-col")}>{page}</main>
+        <SideNav className="self-start max-br:!hidden" />
+        <main className="flex flex-1 flex-col">{page}</main>
       </div>
       {footer?.()}
     </>

@@ -21,7 +21,7 @@ export const MainHeader: FC<MainHeaderProps> = ({ withoutLogo }) => {
   return (
     <header
       className={cn(
-        "mx-6 flex items-center pt-6 br:mx-10 br:pt-7",
+        "container flex items-center pt-6 br:pt-7",
         fontDisplay.className,
       )}
     >
