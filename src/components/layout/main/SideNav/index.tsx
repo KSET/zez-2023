@@ -55,11 +55,13 @@ const NavLink: FC<NavLinkProps> = ({ href, label, subItems }) => {
         </Button>
       </Link>
       {hasSubItems ? (
-        <ul className={$style.subItems}>
-          {subItems!.filter(Boolean).map((subItem) => (
-            <NavLink key={String(subItem.href)} {...subItem} />
-          ))}
-        </ul>
+        <div className={$style.subItems}>
+          <ul>
+            {subItems!.filter(Boolean).map((subItem) => (
+              <NavLink key={String(subItem.href)} {...subItem} />
+            ))}
+          </ul>
+        </div>
       ) : null}
     </li>
   );

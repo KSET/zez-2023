@@ -3,7 +3,7 @@
 }
 
 .items {
-  @apply flex flex-col items-start justify-end -space-y-[3px];
+  @apply flex flex-col items-start justify-end;
 }
 
 %itemLinkTextHover {
@@ -21,12 +21,24 @@
     }
 
     > .subItems {
-      @apply flex;
+      grid-template-rows: 1fr;
+    }
+
+    & + .item {
+      margin-top: -3px;
     }
   }
 
   > .subItems {
-    @apply -mt-1 ml-11 hidden flex-col items-start -space-y-[3px] overflow-clip hover:flex group-hover/item:flex;
+    display: grid;
+    grid-template-rows: 0fr;
+
+    > * {
+      overflow: hidden;
+      @apply -space-y-[3px];
+    }
+
+    @apply -mt-1 ml-11 grid-flow-col items-start overflow-clip transition-[grid-template-rows] duration-300;
   }
 }
 
