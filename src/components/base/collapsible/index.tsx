@@ -1,4 +1,9 @@
-import { type FC, type PropsWithChildren, type ReactNode } from "react";
+import {
+  type FC,
+  type PropsWithChildren,
+  type ReactNode,
+  useState,
+} from "react";
 
 import { cn } from "~/utils/style";
 
@@ -6,19 +11,30 @@ import $style from "./index.module.scss";
 
 export type CollapsibleProps = {
   title: ReactNode;
+  renderOnOpen?: boolean;
 };
 
 export const Collapsible: FC<PropsWithChildren<CollapsibleProps>> = ({
   children,
   title,
+  renderOnOpen = false,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const renderChildren = !renderOnOpen || isOpen;
+
   if (children) {
     return (
       <details
+        open={isOpen}
         className={cn(
           "overflow-hidden border-b border-b-black open:pb-3",
           $style.details,
         )}
+        onToggle={(event) => {
+          if (event.target instanceof HTMLDetailsElement) {
+            setIsOpen(event.target.open);
+          }
+        }}
       >
         <summary
           className={cn(
@@ -28,7 +44,7 @@ export const Collapsible: FC<PropsWithChildren<CollapsibleProps>> = ({
         >
           {title}
         </summary>
-        {children}
+        {renderChildren ? children : null}
       </details>
     );
   }
