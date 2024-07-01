@@ -195,7 +195,7 @@ export default function PageTest(
                     stroke: `rgb(${rand.quick() * 255},${rand.quick() * 255},${
                       rand.quick() * 255
                     })`,
-                    strokeWidth: `${rand.quick() * 10 + 1}`,
+                    strokeWidth: `${rand.quick() * 50 + 1}`,
                   }}
                 />
               );
