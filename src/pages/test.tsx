@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-operators */
 import { type Property } from "csstype";
-import { type InferGetStaticPropsType } from "next";
+import { type InferGetServerSidePropsType } from "next";
 import {
   type ComponentProps,
   type CSSProperties,
@@ -98,7 +98,7 @@ const RandPath = ({
   );
 };
 
-export const getStaticProps = () => {
+export const getServerSideProps = () => {
   return {
     props: {
       randSeed: Math.random().toString(36).slice(2),
@@ -108,7 +108,7 @@ export const getStaticProps = () => {
 
 // eslint-disable-next-line react/function-component-definition
 export default function PageTest(
-  props: InferGetStaticPropsType<typeof getStaticProps>,
+  props: InferGetServerSidePropsType<typeof getServerSideProps>,
 ) {
   const [height, setHeight] = useState(1920);
   const [width, setWidth] = useState(1080);
