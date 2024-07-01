@@ -186,8 +186,10 @@ export const CollapsibleLinks: FC<CollapsibleLinksProps> = ({
                     youTubeProps={{
                       loading: "lazy",
                       opts: {
-                        loop: 1,
-                        modestbranding: 1,
+                        playerVars: {
+                          loop: 1,
+                          modestbranding: 1,
+                        },
                       },
                     }}
                   />
