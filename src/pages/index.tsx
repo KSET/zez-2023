@@ -9,16 +9,18 @@ const PageHome: NextPageWithLayout = () => {
     <>
       <MainHeader />
 
-      <img
-        alt="Slušaj drugačije"
-        className="absolute bottom-[46px] left-[42px] h-28 object-contain max-br:hidden"
-        src={ImageTag.src}
-      />
-      <img
-        alt="ZEZ"
-        className="mb-6 ml-auto mr-4 mt-auto h-20 object-contain br:hidden"
-        src={ImageZezLogo.src}
-      />
+      <div className="container relative flex-1">
+        <img
+          alt="Slušaj drugačije"
+          className="absolute bottom-[46px] left-[42px] h-28 object-contain max-br:hidden"
+          src={ImageTag.src}
+        />
+        <img
+          alt="ZEZ"
+          className="absolute bottom-6 right-5 h-[76px] object-contain br:hidden"
+          src={ImageZezLogo.src}
+        />
+      </div>
 
       <video
         autoPlay

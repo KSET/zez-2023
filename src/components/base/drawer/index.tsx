@@ -62,7 +62,7 @@ export const AppDrawer: FC<PropsWithChildren<AppDrawerProps>> = ({
         rootClassName={cn($style.root, props.rootClassName)}
         onClose={onClose}
       >
-        <div className="flex h-full w-full flex-col bg-white p-4 text-black">
+        <div className="flex h-full w-full flex-col bg-white p-4 text-off-black">
           {showCloseButton ? (
             <div className="p-3 pr-2">
               <button

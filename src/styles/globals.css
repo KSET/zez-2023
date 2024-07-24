@@ -9,5 +9,5 @@
 }
 
 #__next {
-  @apply flex min-h-screen flex-1 flex-col;
+  @apply flex min-h-screen flex-1 flex-col text-off-black;
 }

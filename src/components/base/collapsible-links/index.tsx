@@ -163,7 +163,7 @@ export const CollapsibleLinks: FC<CollapsibleLinksProps> = ({
     <div
       {...props}
       className={cn(
-        "flex flex-col gap-1 border-t border-t-black pt-1",
+        "flex flex-col gap-1 border-t-2 border-t-off-black pt-1",
         props.className,
       )}
     >

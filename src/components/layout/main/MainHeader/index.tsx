@@ -101,7 +101,7 @@ export const MainHeader = () => {
   return (
     <header
       className={cn(
-        "container flex items-center pt-6 br:pt-7",
+        "container flex items-start pt-6 br:pt-7",
         fontDisplay.className,
       )}
     >
@@ -110,16 +110,16 @@ export const MainHeader = () => {
       <Link className="ml-auto hover:contrast-200 max-br:hidden" href="/">
         <img
           alt="ZEZ logo"
-          className="h-20 max-br:hidden"
+          className="h-[100px] max-br:hidden"
           src={ImageZezLogo.src}
         />
       </Link>
 
-      <div className="block br:hidden">
+      <div className="flex flex-col br:hidden">
         <NavLink label="menu" onClick={() => setNavOpen((open) => !open)} />
         <NavLink label="generator" />
         <AppDrawer showCloseButton open={navOpen} onChange={setNavOpen}>
-          <div className="flex w-full flex-col bg-white text-black">
+          <div className="flex w-full flex-col bg-white text-off-black">
             <Nav
               className="flex-col"
               sectionProps={{
@@ -128,7 +128,7 @@ export const MainHeader = () => {
             />
           </div>
 
-          <div className="mb-[18px] ml-[10px] mt-auto">
+          <div className="mb-[18px] mt-auto">
             <Link
               className="ml-auto flex justify-end hover:contrast-200"
               href="/"

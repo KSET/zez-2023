@@ -59,7 +59,7 @@ const MobileTagList = ({
         </div>
 
         <div className="flex flex-1 items-center">
-          <div className="flex flex-1 flex-wrap gap-y-3">
+          <div className="flex flex-1 flex-wrap gap-y-1.5">
             {tags.map((tag) => {
               return (
                 <Tag
@@ -81,12 +81,12 @@ const MobileTagList = ({
           </div>
         </div>
 
-        <div className="mt-auto flex pb-6 text-[42px]">
+        <div className="mt-auto flex gap-2 pb-6 text-[42px]">
           {anySelected ? (
             <Button
               plain
               square
-              className="items-center border-b-[3px]"
+              className="mx-auto items-center border-b-[3px]"
               onClick={() => {
                 setSelected({});
               }}
@@ -95,7 +95,9 @@ const MobileTagList = ({
             </Button>
           ) : null}
           <Button
-            className="ml-auto leading-none"
+            className={cn("leading-none", {
+              ["w-full"]: !anySelected,
+            })}
             onClick={() => {
               setGlobalSelected(selected);
               setIsOpen(false);
@@ -157,7 +159,7 @@ const TagList: FC = () => {
         <h1 className="text-2xl">Svi izvođači</h1>
 
         <Button
-          className="ml-auto flex-row text-2xl"
+          className="ml-auto flex-row border-[3px] text-2xl"
           onClick={() => {
             setTagSelectorOpen((prev) => !prev);
           }}
@@ -202,7 +204,7 @@ const ArtistsList = () => {
         return (
           <article
             key={artist.id}
-            className="flex scroll-m-16 flex-col gap-4 gap-y-10 text-2xl tracking-[-0.036em] max-br:gap-y-4 br:grid br:grid-cols-[1fr_23.5rem]"
+            className="flex scroll-m-16 flex-col gap-4 gap-y-10 text-2xl tracking-[-0.036em] max-br:gap-y-4 max-br:text-base max-br:leading-5 br:grid br:grid-cols-[1fr_23.5rem]"
             id={escapeSelector(`artist-${artist.name}`)}
           >
             <div className="order-1 col-span-full max-br:order-2 br:mb-6">
@@ -239,7 +241,7 @@ const ArtistsList = () => {
               }}
             />
             {(artist.links?.length ?? 0) > 0 ? (
-              <div className="order-4 flex-1">
+              <div className="order-4 flex-1 text-2xl">
                 <CollapsibleLinks links={artist.links!} />
               </div>
             ) : null}

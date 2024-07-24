@@ -27,7 +27,7 @@ export const Collapsible: FC<PropsWithChildren<CollapsibleProps>> = ({
       <details
         open={isOpen}
         className={cn(
-          "overflow-hidden border-b border-b-black open:pb-3",
+          "overflow-hidden border-b-2 border-b-off-black open:pb-3",
           $style.details,
         )}
         onToggle={(event) => {
@@ -50,7 +50,7 @@ export const Collapsible: FC<PropsWithChildren<CollapsibleProps>> = ({
   }
 
   return (
-    <div className="overflow-hidden border-b border-b-black">
+    <div className="overflow-hidden border-b-2 border-b-off-black">
       <div className="flex items-center justify-stretch pb-2">{title}</div>
     </div>
   );

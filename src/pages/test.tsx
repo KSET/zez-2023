@@ -288,8 +288,8 @@ const BandControls = () => {
             // eslint-disable-next-line react/no-array-index-key
             key={i}
             className={cn(
-              "box-content aspect-square h-[1em] cursor-pointer rounded-full border-4 border-black bg-white p-0.5 text-center align-middle text-4xl font-bold leading-none",
-              selectedBand === i && "!bg-black !text-white",
+              "box-content aspect-square h-[1em] cursor-pointer rounded-full border-4 border-off-black bg-white p-0.5 text-center align-middle text-4xl font-bold leading-none",
+              selectedBand === i && "!bg-off-black !text-white",
             )}
             onClick={() => setSelectedBand(i)}
           >
