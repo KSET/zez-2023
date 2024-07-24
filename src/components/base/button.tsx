@@ -22,10 +22,10 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
       disabled={disabled}
       type="button"
       className={cn(
-        "flex overflow-clip border-black bg-white py-[1px] leading-none tracking-tight hover:hover-hover:pointer-fine:bg-black hover:hover-hover:pointer-fine:text-white",
+        "flex overflow-clip border-off-black bg-white py-[1px] leading-none tracking-tight hover:hover-hover:pointer-fine:bg-off-black hover:hover-hover:pointer-fine:text-white",
         square ? "rounded-none" : "rounded-full",
-        plain ? "border-0" : "border-[3px] px-3",
-        active && "bg-black text-white",
+        plain ? "border-0" : "border-4 px-3",
+        active && "bg-off-black text-white",
         disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
         props.className,
       )}

@@ -250,7 +250,7 @@ const ArtistsList = () => {
   );
 };
 
-const PageFestivalArtists: NextPage = () => {
+const PageArchive: NextPage = () => {
   return (
     <>
       <Head>
@@ -268,4 +268,4 @@ const PageFestivalArtists: NextPage = () => {
   );
 };
 
-export default PageFestivalArtists;
+export default PageArchive;

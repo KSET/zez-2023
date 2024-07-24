@@ -10,7 +10,7 @@ import { DefaultSeo } from "next-seo";
 import { Suspense } from "react";
 
 import { GlobalLoader } from "~/components/base/global-loader";
-import { mainLayout } from "~/layouts/main";
+import { MainLayout } from "~/layouts/main";
 import { type WithFooter, type WithLayout } from "~/types/layout";
 import { api } from "~/utils/queryApi";
 
@@ -22,7 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     WithFooter<NextPage>
   >;
 
-  const layout = getLayout ?? mainLayout;
+  const layout = getLayout ?? MainLayout;
 
   return (
     <>

@@ -1,7 +1,9 @@
-export type ClassValue = string | boolean | null | undefined;
+import clsx, { type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
-export const cn = (...classes: (ClassValue | ClassValue[])[]) =>
-  classes.flat().filter(Boolean).join(" ") || undefined;
+export type { ClassValue } from "clsx";
+
+export const cn = (...classes: ClassValue[]) => twMerge(clsx(...classes));
 
 // CSS string/identifier serialization
 // https://drafts.csswg.org/cssom/#common-serializing-idioms
