@@ -202,10 +202,10 @@ const ArtistsList = () => {
         return (
           <article
             key={artist.id}
-            className="flex scroll-m-16 flex-col gap-4 tracking-tight br:grid br:grid-cols-[1fr_20rem]"
+            className="flex scroll-m-16 flex-col gap-4 gap-y-10 text-2xl tracking-[-0.036em] max-br:gap-y-4 br:grid br:grid-cols-[1fr_23.5rem]"
             id={escapeSelector(`artist-${artist.name}`)}
           >
-            <div className="order-2 br:order-1">
+            <div className="order-1 col-span-full max-br:order-2 br:mb-6">
               <h2 className="flex gap-2 text-[40px] leading-[0.95] br:text-[54px]">
                 <span className="font-bold">{artist.name}</span>
                 <span className="uppercase br:flex-1">
@@ -221,17 +221,17 @@ const ArtistsList = () => {
                   );
                 })}
               </div>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: artist.description,
-                }}
-                className="mt-6 flex flex-col gap-1.5 leading-5 br:gap-2"
-              />
             </div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: artist.description,
+              }}
+              className="order-2 flex flex-col gap-2 max-br:order-3 br:gap-2"
+            />
             <AppImage
               alt={artist.name}
               aspectRatio={325 / 260}
-              className="order-1 br:order-2"
+              className="order-3 rounded-[30px] max-br:order-1 br:row-span-2"
               lazySrc={artist.image.blurDataURL}
               src={artist.image.src}
               observerOptions={{
@@ -239,7 +239,7 @@ const ArtistsList = () => {
               }}
             />
             {(artist.links?.length ?? 0) > 0 ? (
-              <div className="order-3 flex-1">
+              <div className="order-4 flex-1">
                 <CollapsibleLinks links={artist.links!} />
               </div>
             ) : null}
