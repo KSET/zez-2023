@@ -38,7 +38,7 @@ const SvgBandsContainer = () => {
 
 const PageHome: NextPageWithLayout = () => {
   return (
-    <div className="relative flex h-screen flex-1 flex-col overflow-hidden">
+    <>
       <MainHeader />
 
       <div className="container relative flex-1">
@@ -55,7 +55,7 @@ const PageHome: NextPageWithLayout = () => {
       </div>
 
       <SvgBandsContainer />
-    </div>
+    </>
   );
 };
 
