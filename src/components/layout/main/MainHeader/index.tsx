@@ -83,7 +83,7 @@ type NavProps = ComponentProps<"nav"> & {
   sectionProps?: ComponentProps<"div">;
 };
 
-const generatorOpenAtom = atom(true);
+const generatorOpenAtom = atom(false);
 
 const GeneratorDropdown = () => {
   const [isOpen, setIsOpen] = useAtom(generatorOpenAtom);

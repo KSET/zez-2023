@@ -45,27 +45,53 @@ const _backgroundColorAtom = atom<BackgroundColor>(backgroundColors[0]);
 
 export const backgroundColorAtom = atom((get) => get(_backgroundColorAtom));
 
-export const N_BANDS = 5;
-
-const randBetween = (a: number, b: number) =>
-  // eslint-disable-next-line no-mixed-operators
-  Math.round(Math.random() * (b - a) + a);
-
-const bandDataAtom = atom<BandData[]>(
-  Array.from(
-    { length: N_BANDS },
-    (_, i) =>
-      ({
-        id: `band-${i}`,
-        nSubBands: 4,
-        speed: randBetween(5, 50),
-        amplitude: randBetween(3, 10),
-        color: colors[i % colors.length]!,
-        strokeWidth: randBetween(1, 25),
-        dashWidth: Math.random() > 0.75 ? 0 : randBetween(0, 50),
-      } satisfies BandData),
-  ),
-);
+const bandDataAtom = atom<BandData[]>([
+  {
+    id: "band-0",
+    nSubBands: 2,
+    speed: 45,
+    amplitude: 9,
+    color: "#f39",
+    strokeWidth: 75,
+    dashWidth: 0,
+  },
+  {
+    id: "band-1",
+    nSubBands: 1,
+    speed: 12,
+    amplitude: 15,
+    color: "#0c0",
+    strokeWidth: 276,
+    dashWidth: 0,
+  },
+  {
+    id: "band-2",
+    nSubBands: 72,
+    speed: 31,
+    amplitude: 19,
+    color: "#001cce",
+    strokeWidth: 1,
+    dashWidth: 0,
+  },
+  {
+    id: "band-3",
+    nSubBands: 4,
+    speed: 34,
+    amplitude: 6,
+    color: "#ff7900",
+    strokeWidth: 113,
+    dashWidth: 0,
+  },
+  {
+    id: "band-4",
+    nSubBands: 4,
+    speed: 50,
+    amplitude: 9,
+    color: "#a010fd",
+    strokeWidth: 12,
+    dashWidth: 0,
+  },
+]);
 
 type AnimationProps = {
   duration: Property.AnimationDuration;
@@ -79,32 +105,51 @@ const SvgPath = ({
   start,
   points,
   strokeDasharray,
+  rand,
+  bandData,
   animations,
   ...pathProps
 }: Omit<ComponentProps<"path">, "strokeDasharray" | "points"> & {
   start: Pointish;
   points: [Pointish, Pointish, Pointish, Pointish, Pointish, Pointish];
   strokeDasharray?: (number | null | undefined)[];
+  bandData: BandData;
+  rand: PRNG;
   animations?: {
     dashes?: Partial<AnimationProps>;
     path?: Partial<AnimationProps>;
   };
 }) => {
+  const xOffset = Math.ceil(
+    bandData.strokeWidth * 0.5 + bandData.strokeWidth * 0.5 * rand.quick(),
+  );
+
+  const startOffset = new Point({
+    x: start.x - xOffset,
+    y: start.y,
+  });
+
   const startPath = `path("${[
-    new PathMoveTo({ to: start }),
+    new PathMoveTo({ to: startOffset }),
     new PathBezierCubic({
       controlPointStart: new Point(points[0]!),
       controlPointEnd: new Point(points[1]!),
-      lineEnd: new Point(points[2]!),
+      lineEnd: new Point({
+        x: points[2]!.x + xOffset,
+        y: points[2]!.y,
+      }),
     }),
   ].join(" ")}")`;
 
   const endPath = `path("${[
-    new PathMoveTo({ to: start }),
+    new PathMoveTo({ to: startOffset }),
     new PathBezierCubic({
       controlPointStart: new Point(points[3]!),
       controlPointEnd: new Point(points[4]!),
-      lineEnd: new Point(points[5]!),
+      lineEnd: new Point({
+        x: points[5]!.x + xOffset,
+        y: points[5]!.y,
+      }),
     }),
   ].join(" ")}")`;
 
@@ -165,6 +210,10 @@ const SvgBand = (props: {
     useMemo(() => atom((get) => get(bandDataAtom)[props.index]), [props.index]),
   );
 
+  const N_BANDS = useAtomValue(
+    useMemo(() => atom((get) => get(bandDataAtom).length), []),
+  );
+
   if (!data) {
     return null;
   }
@@ -177,6 +226,8 @@ const SvgBand = (props: {
         return (
           <SvgPath
             key={`${data.id}-${subBandI}`}
+            bandData={data}
+            rand={props.rand}
             start={props.start}
             strokeDasharray={data.dashWidth > 0 ? [data.dashWidth] : undefined}
             animations={{
@@ -250,6 +301,9 @@ export const SvgBands = ({
   height,
   ...props
 }: SvgBandsProps) => {
+  const N_BANDS = useAtomValue(
+    useMemo(() => atom((get) => get(bandDataAtom).length), []),
+  );
   const bandHeight = height / N_BANDS;
   const backgroundColor = useAtomValue(backgroundColorAtom);
 
@@ -335,7 +389,7 @@ export const GeneratorControls = () => {
       <label className="flex flex-col gap-2">
         <span className="uppercase">Bundle</span>
         <input
-          className="h-1 appearance-none bg-off-black accent-off-black"
+          className="h-0.5 appearance-none bg-off-black accent-off-black"
           max={100}
           min={1}
           type="range"
@@ -347,7 +401,7 @@ export const GeneratorControls = () => {
       <label className="flex flex-col gap-2">
         <span className="uppercase">Speed</span>
         <input
-          className="h-1 appearance-none bg-off-black accent-off-black"
+          className="h-0.5 appearance-none bg-off-black accent-off-black"
           max={50}
           min={1}
           type="range"
@@ -359,7 +413,7 @@ export const GeneratorControls = () => {
       <label className="flex flex-col gap-2">
         <span className="uppercase">Line weight</span>
         <input
-          className="h-1 appearance-none bg-off-black accent-off-black"
+          className="h-0.5 appearance-none bg-off-black accent-off-black"
           max={400}
           min={1}
           type="range"
@@ -371,7 +425,7 @@ export const GeneratorControls = () => {
       <label className="flex flex-col gap-2">
         <span className="uppercase">Dash</span>
         <input
-          className="h-1 appearance-none bg-off-black accent-off-black"
+          className="h-0.5 appearance-none bg-off-black accent-off-black"
           max={100}
           min={0}
           type="range"
@@ -383,7 +437,7 @@ export const GeneratorControls = () => {
       <label className="flex flex-col gap-2">
         <span className="uppercase">Amplitude</span>
         <input
-          className="h-1 appearance-none bg-off-black accent-off-black"
+          className="h-0.5 appearance-none bg-off-black accent-off-black"
           max={50}
           min={1}
           type="range"
