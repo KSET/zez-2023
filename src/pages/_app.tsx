@@ -30,6 +30,24 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content="IE=Edge" httpEquiv="X-UA-Compatible" />
+        <link
+          href="/apple-touch-icon.png"
+          rel="apple-touch-icon"
+          sizes="180x180"
+        />
+        <link
+          href="/favicon-32x32.png"
+          rel="icon"
+          sizes="32x32"
+          type="image/png"
+        />
+        <link
+          href="/favicon-16x16.png"
+          rel="icon"
+          sizes="16x16"
+          type="image/png"
+        />
+        <link href="/site.webmanifest" rel="manifest" />
       </Head>
       <DefaultSeo
         description="Zavod za Eksperimentalni Zvuk - Nit vodilja svih programa je stvoriti prostor za slušati drugačije - ono što je drugačije, one koji su drugačiji i na drugačiji način."
