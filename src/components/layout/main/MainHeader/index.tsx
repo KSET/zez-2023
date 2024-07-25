@@ -12,7 +12,10 @@ import type { UrlObject } from "url";
 import ImageZezLogo from "~/assets/img/shared/zez-logo.png";
 import { Button } from "~/components/base/button";
 import { AppDrawer } from "~/components/base/drawer";
-import { GeneratorControls } from "~/components/base/svg-generator";
+import {
+  DownloadAnimationButton,
+  GeneratorControls,
+} from "~/components/base/svg-generator";
 import { useNavigationChange } from "~/hooks/onNavigation";
 import { fontDisplay } from "~/utils/font";
 import { cn } from "~/utils/style";
@@ -111,7 +114,13 @@ const GeneratorDropdown = () => {
       />
       {isOpen ? (
         <div className="absolute left-0 z-50 flex flex-col gap-4 rounded-[30px] border-4 border-off-black bg-white p-8 text-base font-medium">
-          <GeneratorControls />
+          <GeneratorControls>
+            <DownloadAnimationButton>
+              <Button className="p-1.5 font-semibold uppercase">
+                Save as SVG
+              </Button>
+            </DownloadAnimationButton>
+          </GeneratorControls>
         </div>
       ) : null}
     </div>

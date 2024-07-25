@@ -5,13 +5,16 @@ import {
   type ComponentProps,
   type CSSProperties,
   type HTMLProps,
+  type ReactNode,
   useCallback,
   useMemo,
   useState,
 } from "react";
 import { type PRNG } from "seedrandom";
 import Seedrandom from "seedrandom";
+import { z } from "zod";
 
+import type { Payload as GenerateAnimationPayload } from "~/pages/api/generator/my-generated-animation.svg";
 import { cn } from "~/utils/style";
 import { PathBezierCubic, PathMoveTo, Point } from "~/utils/svg/path";
 
@@ -26,20 +29,23 @@ export const colors = [
   "#322F31",
   "#fff",
 ] as const;
-export type Color = (typeof colors)[number];
+export const colorValidator = z.enum(colors);
+export type Color = z.infer<typeof colorValidator>;
 
 export const backgroundColors = ["#fff", "#322F31"] as const;
-export type BackgroundColor = (typeof backgroundColors)[number];
+export const backgroundColorValidator = z.enum(backgroundColors);
+export type BackgroundColor = z.infer<typeof backgroundColorValidator>;
 
-export type BandData = {
-  id: string;
-  nSubBands: number;
-  speed: number;
-  amplitude: number;
-  strokeWidth: number;
-  dashWidth: number;
-  color: Color;
-};
+export const bandDataValidator = z.object({
+  id: z.string(),
+  nSubBands: z.number(),
+  speed: z.number(),
+  amplitude: z.number(),
+  strokeWidth: z.number(),
+  dashWidth: z.number(),
+  color: colorValidator,
+});
+export type BandData = z.infer<typeof bandDataValidator>;
 
 const _backgroundColorAtom = atom<BackgroundColor>(backgroundColors[0]);
 
@@ -199,18 +205,12 @@ const SvgPath = ({
   );
 };
 
-const SvgBand = (props: {
-  start: Point;
-  width: number;
-  height: number;
-  rand: PRNG;
-  index: number;
-}) => {
+const SvgBand = (props: Omit<SvgBandRawProps, "nBands" | "band">) => {
   const data = useAtomValue(
     useMemo(() => atom((get) => get(bandDataAtom)[props.index]), [props.index]),
   );
 
-  const N_BANDS = useAtomValue(
+  const nBands = useAtomValue(
     useMemo(() => atom((get) => get(bandDataAtom).length), []),
   );
 
@@ -218,18 +218,31 @@ const SvgBand = (props: {
     return null;
   }
 
+  return <SvgBandRaw {...props} band={data} nBands={nBands} />;
+};
+
+type SvgBandRawProps = {
+  start: Point;
+  width: number;
+  height: number;
+  rand: PRNG;
+  index: number;
+  band: BandData;
+  nBands: number;
+};
+export const SvgBandRaw = ({ band, nBands, ...props }: SvgBandRawProps) => {
   return (
     <>
-      {Array.from({ length: data.nSubBands }, (_, i) => i).map((subBandI) => {
-        const speed = (50 - data.speed) * 0.5 + 0.25;
+      {Array.from({ length: band.nSubBands }, (_, i) => i).map((subBandI) => {
+        const speed = (50 - band.speed) * 0.5 + 0.25;
 
         return (
           <SvgPath
-            key={`${data.id}-${subBandI}`}
-            bandData={data}
+            key={`${band.id}-${subBandI}`}
+            bandData={band}
             rand={props.rand}
             start={props.start}
-            strokeDasharray={data.dashWidth > 0 ? [data.dashWidth] : undefined}
+            strokeDasharray={band.dashWidth > 0 ? [band.dashWidth] : undefined}
             animations={{
               dashes: {
                 delay: `${speed * props.rand.quick()}s`,
@@ -244,14 +257,14 @@ const SvgBand = (props: {
               {
                 x:
                   props.height / 2 -
-                  (props.height * props.rand.quick()) / N_BANDS,
-                y: props.start.y - props.height * (data.amplitude / 25),
+                  (props.height * props.rand.quick()) / nBands,
+                y: props.start.y - props.height * (band.amplitude / 25),
               },
               {
                 x:
                   props.height / 2 +
-                  (props.height * props.rand.quick()) / N_BANDS,
-                y: props.start.y + props.height * (data.amplitude / 25),
+                  (props.height * props.rand.quick()) / nBands,
+                y: props.start.y + props.height * (band.amplitude / 25),
               },
               {
                 x: props.width,
@@ -261,14 +274,14 @@ const SvgBand = (props: {
               {
                 x:
                   props.height / 2 -
-                  (props.height * props.rand.quick()) / N_BANDS,
-                y: props.start.y + props.height * (data.amplitude / 25),
+                  (props.height * props.rand.quick()) / nBands,
+                y: props.start.y + props.height * (band.amplitude / 25),
               },
               {
                 x:
                   props.height / 2 +
-                  (props.height * props.rand.quick()) / N_BANDS,
-                y: props.start.y - props.height * (data.amplitude / 25),
+                  (props.height * props.rand.quick()) / nBands,
+                y: props.start.y - props.height * (band.amplitude / 25),
               },
               {
                 x: props.width,
@@ -276,8 +289,8 @@ const SvgBand = (props: {
               },
             ]}
             style={{
-              stroke: data.color,
-              strokeWidth: data.strokeWidth,
+              stroke: band.color,
+              strokeWidth: band.strokeWidth,
             }}
           />
         );
@@ -340,7 +353,97 @@ export const SvgBands = ({
   );
 };
 
-export const GeneratorControls = () => {
+export type SvgBandsRawProps = Omit<
+  HTMLProps<SVGElement>,
+  "children" | "xmlns" | "ref"
+> & {
+  randSeed: string;
+  width: number;
+  height: number;
+  backgroundColor: string;
+  bands: BandData[];
+  children?: ReactNode;
+};
+export const SvgBandsRaw = ({
+  backgroundColor,
+  height,
+  width,
+  randSeed,
+  bands,
+  children,
+  ...props
+}: SvgBandsRawProps) => {
+  const rand = Seedrandom(randSeed);
+  const bandHeight = height / bands.length;
+
+  return (
+    <svg
+      {...props}
+      data-bg-color={backgroundColor}
+      height={height}
+      width={width}
+      xmlns="http://www.w3.org/2000/svg"
+      style={{
+        ...props.style,
+        backgroundColor,
+      }}
+    >
+      {children}
+      {bands.map((band, bandI) => (
+        <SvgBandRaw
+          key={band.id}
+          band={band}
+          height={height}
+          index={bandI}
+          nBands={bands.length}
+          rand={rand}
+          width={width}
+          start={
+            new Point({
+              x: 0,
+              y: bandHeight * bandI + bandHeight / 2,
+            })
+          }
+        />
+      ))}
+    </svg>
+  );
+};
+
+export const DownloadAnimationButton = ({
+  children,
+  ...props
+}: HTMLProps<HTMLAnchorElement> & { children: ReactNode }) => {
+  const bands = useAtomValue(bandDataAtom);
+  const backgroundColor = useAtomValue(backgroundColorAtom);
+
+  const payload = useMemo(
+    () =>
+      ({
+        bands,
+        backgroundColor,
+        randSeed: "",
+      } satisfies GenerateAnimationPayload),
+    [backgroundColor, bands],
+  );
+  const encodedPayload = useMemo(
+    () => btoa(JSON.stringify(payload)),
+    [payload],
+  );
+
+  return (
+    <a
+      {...props}
+      className={cn("contents", props.className)}
+      download="my-generated-animation.svg"
+      href={`/api/generator/my-generated-animation.svg?data=${encodedPayload}`}
+    >
+      {children}
+    </a>
+  );
+};
+
+export const GeneratorControls = ({ children }: { children?: ReactNode }) => {
   const [bandData, setBandData] = useAtom(bandDataAtom);
   const [selectedBand, setSelectedBand] = useState(0);
   const [backgroundColor, setBackgroundColor] = useAtom(_backgroundColorAtom);
@@ -501,6 +604,8 @@ export const GeneratorControls = () => {
           })}
         </div>
       </div>
+
+      {children}
     </>
   );
 };
