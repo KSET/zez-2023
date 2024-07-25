@@ -136,7 +136,7 @@ const SvgPath = ({
   };
 }) => {
   const xOffset = Math.ceil(
-    bandData.strokeWidth * 0.5 + bandData.strokeWidth * 0.5 * rand.quick(),
+    20 + bandData.strokeWidth * 0.5 + bandData.strokeWidth * 0.5 * rand.quick(),
   );
 
   const startOffset = new Point({
