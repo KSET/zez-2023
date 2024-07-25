@@ -1,3 +1,4 @@
+import { atom, useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { type ComponentProps, type HTMLProps, useState } from "react";
@@ -6,6 +7,7 @@ import type { UrlObject } from "url";
 import ImageZezLogo from "~/assets/img/shared/zez-logo.png";
 import { Button } from "~/components/base/button";
 import { AppDrawer } from "~/components/base/drawer";
+import { GeneratorControls } from "~/components/base/svg-generator";
 import { useNavigationChange } from "~/hooks/onNavigation";
 import { fontDisplay } from "~/utils/font";
 import { cn } from "~/utils/style";
@@ -76,11 +78,28 @@ type NavProps = ComponentProps<"nav"> & {
   sectionProps?: ComponentProps<"div">;
 };
 
+const generatorOpenAtom = atom(false);
+
+const GeneratorDropdown = () => {
+  const [isOpen, setIsOpen] = useAtom(generatorOpenAtom);
+
+  return (
+    <div className="relative">
+      <NavLink label="generator" onClick={() => setIsOpen((x) => !x)} />
+      {isOpen ? (
+        <div className="absolute left-0 z-50 flex flex-col gap-4 rounded-[30px] border-4 border-off-black bg-white p-8 text-base font-medium">
+          <GeneratorControls />
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
 const Nav = ({ sectionProps, ...props }: NavProps) => {
   return (
     <nav {...props} className={cn("flex gap-8", props.className)}>
       <div {...sectionProps} className={cn("flex", sectionProps?.className)}>
-        <NavLink className="max-br:hidden" label="generator" />
+        <GeneratorDropdown />
         {links.map((link) => {
           return <NavLink key={String(link.href)} {...link} />;
         })}
@@ -94,15 +113,19 @@ const Nav = ({ sectionProps, ...props }: NavProps) => {
   );
 };
 
-export const MainHeader = () => {
+export const MainHeader = (
+  props: Omit<HTMLProps<HTMLDivElement>, "children" | "ref">,
+) => {
   const [navOpen, setNavOpen] = useState(false);
   useNavigationChange(() => setNavOpen(false));
 
   return (
     <header
+      {...props}
       className={cn(
-        "container flex items-start pt-6 br:pt-7",
+        "container z-10 flex items-start pt-6 br:pt-7",
         fontDisplay.className,
+        props.className,
       )}
     >
       <Nav className="max-br:hidden" />
@@ -117,7 +140,7 @@ export const MainHeader = () => {
 
       <div className="flex flex-col br:hidden">
         <NavLink label="menu" onClick={() => setNavOpen((open) => !open)} />
-        <NavLink label="generator" />
+        <GeneratorDropdown />
         <AppDrawer showCloseButton open={navOpen} onChange={setNavOpen}>
           <div className="flex w-full flex-col bg-white text-off-black">
             <Nav
