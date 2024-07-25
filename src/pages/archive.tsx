@@ -1,6 +1,7 @@
 import { atom, useAtom, useAtomValue } from "jotai";
 import { type NextPage } from "next";
 import Head from "next/head";
+import { NextSeo } from "next-seo";
 import { type FC, useEffect, useMemo, useState } from "react";
 
 import ImageIconFilter from "~/assets/page/festival/artists/icon-filter.svg";
@@ -204,7 +205,7 @@ const ArtistsList = () => {
         return (
           <article
             key={artist.id}
-            className="flex scroll-m-16 flex-col gap-4 gap-y-10 text-2xl tracking-[-0.036em] max-br:gap-y-4 max-br:text-base max-br:leading-5 br:grid br:grid-cols-[1fr_23.5rem]"
+            className="flex scroll-m-16 flex-col gap-4 gap-y-10 text-2xl tracking-[-0.036em] max-br:gap-y-4 max-br:text-base max-br:leading-5 br:grid br:grid-cols-[1fr_371px]"
             id={escapeSelector(`artist-${artist.name}`)}
           >
             <div className="order-1 col-span-full max-br:order-2 br:mb-6">
@@ -255,6 +256,7 @@ const ArtistsList = () => {
 const PageArchive: NextPage = () => {
   return (
     <>
+      <NextSeo title="Archive" />
       <Head>
         <style>{`
         html {
