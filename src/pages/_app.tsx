@@ -65,7 +65,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
       />
       <SessionProvider session={session}>
         <JotaiProvider>
-          <GlobalLoader />
+          {/* <GlobalLoader /> */}
           <Suspense>{layout(<Component {...pageProps} />, getFooter)}</Suspense>
         </JotaiProvider>
       </SessionProvider>
