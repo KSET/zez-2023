@@ -133,7 +133,7 @@ const PageAbout: WithFooter<NextPage> = () => {
                 <br />
                 Web development: Josip Igrec
                 <br />
-                Image generator program: Dražen Hižak
+                Image generator program: Dražen Hižak, Josip Igrec
                 <br />
                 Typography: Dwight (Lift type)
               </p>

@@ -9,7 +9,6 @@ import { SessionProvider } from "next-auth/react";
 import { DefaultSeo } from "next-seo";
 import { Suspense } from "react";
 
-import { GlobalLoader } from "~/components/base/global-loader";
 import { MainLayout } from "~/layouts/main";
 import { type WithFooter, type WithLayout } from "~/types/layout";
 import { api } from "~/utils/queryApi";
