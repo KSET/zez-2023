@@ -1,7 +1,12 @@
 import { atom, useAtom } from "jotai";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { type ComponentProps, type HTMLProps, useState } from "react";
+import {
+  type ComponentProps,
+  type HTMLProps,
+  useEffect,
+  useState,
+} from "react";
 import type { UrlObject } from "url";
 
 import ImageZezLogo from "~/assets/img/shared/zez-logo.png";
@@ -78,14 +83,32 @@ type NavProps = ComponentProps<"nav"> & {
   sectionProps?: ComponentProps<"div">;
 };
 
-const generatorOpenAtom = atom(false);
+const generatorOpenAtom = atom(true);
 
 const GeneratorDropdown = () => {
   const [isOpen, setIsOpen] = useAtom(generatorOpenAtom);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.pathname !== "/") {
+      setIsOpen(false);
+    }
+  }, [router.pathname, setIsOpen]);
 
   return (
     <div className="relative">
-      <NavLink label="generator" onClick={() => setIsOpen((x) => !x)} />
+      <NavLink
+        label="generator"
+        onClick={() => {
+          if (router.pathname !== "/") {
+            void router.push("/").then(() => {
+              setIsOpen(true);
+            });
+          } else {
+            setIsOpen((x) => !x);
+          }
+        }}
+      />
       {isOpen ? (
         <div className="absolute left-0 z-50 flex flex-col gap-4 rounded-[30px] border-4 border-off-black bg-white p-8 text-base font-medium">
           <GeneratorControls />

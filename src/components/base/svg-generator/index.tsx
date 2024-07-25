@@ -315,7 +315,7 @@ export const GeneratorControls = () => {
     <>
       <div className="flex flex-col gap-2">
         <h2 className="uppercase">Line</h2>
-        <div className="flex justify-between gap-1.5">
+        <div className="flex justify-start gap-1.5">
           {bandData.map((_, i) => (
             <div
               // eslint-disable-next-line react/no-array-index-key
@@ -332,9 +332,10 @@ export const GeneratorControls = () => {
         </div>
       </div>
 
-      <label className="flex flex-col">
+      <label className="flex flex-col gap-2">
         <span className="uppercase">Bundle</span>
         <input
+          className="h-1 appearance-none bg-off-black accent-off-black"
           max={100}
           min={1}
           type="range"
@@ -343,9 +344,10 @@ export const GeneratorControls = () => {
         />
       </label>
 
-      <label className="flex flex-col">
+      <label className="flex flex-col gap-2">
         <span className="uppercase">Speed</span>
         <input
+          className="h-1 appearance-none bg-off-black accent-off-black"
           max={50}
           min={1}
           type="range"
@@ -354,10 +356,11 @@ export const GeneratorControls = () => {
         />
       </label>
 
-      <label className="flex flex-col">
+      <label className="flex flex-col gap-2">
         <span className="uppercase">Line weight</span>
         <input
-          max={50}
+          className="h-1 appearance-none bg-off-black accent-off-black"
+          max={400}
           min={1}
           type="range"
           value={selectedBandData.strokeWidth}
@@ -365,9 +368,10 @@ export const GeneratorControls = () => {
         />
       </label>
 
-      <label className="flex flex-col">
+      <label className="flex flex-col gap-2">
         <span className="uppercase">Dash</span>
         <input
+          className="h-1 appearance-none bg-off-black accent-off-black"
           max={100}
           min={0}
           type="range"
@@ -376,9 +380,10 @@ export const GeneratorControls = () => {
         />
       </label>
 
-      <label className="flex flex-col">
+      <label className="flex flex-col gap-2">
         <span className="uppercase">Amplitude</span>
         <input
+          className="h-1 appearance-none bg-off-black accent-off-black"
           max={50}
           min={1}
           type="range"
@@ -387,9 +392,9 @@ export const GeneratorControls = () => {
         />
       </label>
 
-      <div>
+      <div className="flex flex-col gap-2">
         <span className="uppercase">Line color</span>
-        <div className="flex justify-between gap-1.5">
+        <div className="flex justify-start gap-1.5">
           {colors.map((c) => {
             let borderColor = undefined as string | undefined;
             if (c === selectedBandData.color) {
@@ -415,7 +420,7 @@ export const GeneratorControls = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col gap-2">
         <span className="uppercase">Background color</span>
         <div className="flex justify-start gap-1.5">
           {backgroundColors.map((c) => {

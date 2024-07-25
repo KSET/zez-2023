@@ -8,6 +8,7 @@ import { MainHeader } from "~/components/layout/main/MainHeader";
 import { type NextPageWithLayout } from "~/types/layout";
 
 const SvgBandsContainer = () => {
+  const backgroundColor = useAtomValue(backgroundColorAtom);
   const [windowHeight, setWindowHeight] = useState(1920);
   const [windowWidth, setWindowWidth] = useState(1080);
   useEffect(() => {
@@ -21,35 +22,26 @@ const SvgBandsContainer = () => {
     return () => window.removeEventListener("resize", resizeHandler);
   }, []);
 
-  const offsetTopPx = 128;
-
   return (
     <SvgBands
-      className="absolute bottom-0 left-0 right-0 h-full w-full"
+      className="absolute bottom-0 left-0 right-0 top-0 h-full w-full"
       data-height={windowHeight}
-      height={windowHeight - offsetTopPx}
+      height={windowHeight}
       randSeed=""
       width={windowWidth}
       style={{
-        top: `${offsetTopPx}px`,
+        backgroundColor,
       }}
     />
   );
 };
 
 const PageHome: NextPageWithLayout = () => {
-  const backgroundColor = useAtomValue(backgroundColorAtom);
-
   return (
-    <div
-      className="relative flex h-screen flex-1 flex-col overflow-hidden"
-      style={{
-        backgroundColor,
-      }}
-    >
-      <MainHeader className="z-50" />
+    <div className="relative flex h-screen flex-1 flex-col overflow-hidden">
+      <MainHeader />
 
-      <div className="container relative z-10 flex-1">
+      <div className="container relative flex-1">
         <img
           alt="Slušaj drugačije"
           className="absolute bottom-[46px] left-[42px] h-28 object-contain max-br:hidden"
