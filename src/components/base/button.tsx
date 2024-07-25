@@ -6,6 +6,7 @@ export type ButtonProps = HTMLProps<HTMLButtonElement> & {
   active?: boolean;
   plain?: boolean;
   square?: boolean;
+  type?: "button" | "submit" | "reset";
 };
 
 export const Button: FC<PropsWithChildren<ButtonProps>> = ({
@@ -18,9 +19,9 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
 }) => {
   return (
     <button
+      type="button"
       {...props}
       disabled={disabled}
-      type="button"
       className={cn(
         "flex overflow-clip border-off-black bg-white py-[1px] leading-none tracking-tight hover:hover-hover:pointer-fine:bg-off-black hover:hover-hover:pointer-fine:text-white",
         square ? "rounded-none" : "rounded-full",

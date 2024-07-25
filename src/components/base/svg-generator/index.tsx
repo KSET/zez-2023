@@ -410,10 +410,10 @@ export const SvgBandsRaw = ({
   );
 };
 
-export const DownloadAnimationButton = ({
+export const DownloadAnimationForm = ({
   children,
   ...props
-}: HTMLProps<HTMLAnchorElement> & { children: ReactNode }) => {
+}: HTMLProps<HTMLFormElement> & { children: ReactNode }) => {
   const bands = useAtomValue(bandDataAtom);
   const backgroundColor = useAtomValue(backgroundColorAtom);
 
@@ -432,14 +432,15 @@ export const DownloadAnimationButton = ({
   );
 
   return (
-    <a
+    <form
       {...props}
-      className={cn("contents", props.className)}
-      download="my-generated-animation.svg"
-      href={`/api/generator/my-generated-animation.svg?data=${encodedPayload}`}
+      action="/api/generator/my-generated-animation.svg"
+      className="contents"
+      method="POST"
     >
+      <input name="data" type="hidden" value={encodedPayload} />
       {children}
-    </a>
+    </form>
   );
 };
 

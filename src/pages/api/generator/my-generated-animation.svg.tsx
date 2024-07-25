@@ -18,21 +18,53 @@ export const payloadValidator = z.object({
 export type Payload = z.infer<typeof payloadValidator>;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const rawData = req.query.data;
-
-  if (!rawData || typeof rawData !== "string") {
-    return res.status(400).send("Invalid data. Failed to get data from query.");
-  }
-
   let data = null as Payload | null;
-  try {
-    data = payloadValidator.parse(JSON.parse(atob(rawData)));
-  } catch (e) {
-    return res
-      .status(400)
-      .send(`Invalid data. Failed to parse data.\n\n${String(e)}`);
+
+  switch (req.method) {
+    case "GET": {
+      const rawData = req.query.data;
+      if (!rawData || typeof rawData !== "string") {
+        return res
+          .status(400)
+          .send("Invalid data. Failed to get data from query.");
+      }
+
+      try {
+        data = payloadValidator.parse(JSON.parse(atob(rawData)));
+      } catch (e) {
+        return res
+          .status(400)
+          .send(`Invalid data. Failed to parse data.\n\n${String(e)}`);
+      }
+
+      break;
+    }
+
+    case "POST": {
+      const postBodyValidator = z.object({
+        data: z.string(),
+      });
+      try {
+        const rawData = postBodyValidator.parse(req.body).data;
+        data = payloadValidator.parse(JSON.parse(atob(rawData)));
+      } catch (e) {
+        return res
+          .status(400)
+          .send(`Invalid data. Failed to parse data.\n\n${String(e)}`);
+      }
+
+      break;
+    }
+
+    default: {
+      return res.status(405).send("Method Not Allowed");
+    }
   }
 
+  sendResponse(res, data);
+}
+
+const sendResponse = (res: NextApiResponse, data: Payload) => {
   const markup = renderToStaticMarkup(
     <SvgBandsRaw
       backgroundColor={data.backgroundColor}
@@ -74,5 +106,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   return res
     .status(200)
     .setHeader("content-type", "image/svg+xml")
+    .setHeader("cache-control", "public, max-age=31536000, immutable")
+    .setHeader(
+      "content-disposition",
+      "attachment; filename=my-generated-animation.svg",
+    )
     .send(markup);
-}
+};

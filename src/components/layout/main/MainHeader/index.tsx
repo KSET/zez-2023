@@ -13,7 +13,7 @@ import ImageZezLogo from "~/assets/img/shared/zez-logo.png";
 import { Button } from "~/components/base/button";
 import { AppDrawer } from "~/components/base/drawer";
 import {
-  DownloadAnimationButton,
+  DownloadAnimationForm,
   GeneratorControls,
 } from "~/components/base/svg-generator";
 import { useNavigationChange } from "~/hooks/onNavigation";
@@ -113,13 +113,13 @@ const GeneratorDropdown = () => {
         }}
       />
       {isOpen ? (
-        <div className="absolute left-0 z-50 flex flex-col gap-4 rounded-[30px] border-4 border-off-black bg-white p-8 text-base font-medium">
+        <div className="absolute left-0 z-50 flex flex-col gap-4 rounded-[30px] border-4 border-off-black bg-white px-8 py-4 text-base font-medium">
           <GeneratorControls>
-            <DownloadAnimationButton>
-              <Button className="p-1.5 font-semibold uppercase">
+            <DownloadAnimationForm>
+              <Button className="p-1.5 font-semibold uppercase" type="submit">
                 Save as SVG
               </Button>
-            </DownloadAnimationButton>
+            </DownloadAnimationForm>
           </GeneratorControls>
         </div>
       ) : null}
