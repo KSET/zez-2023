@@ -48,81 +48,94 @@ const PageAbout: WithFooter<NextPage> = () => {
           <div className="flex flex-col gap-12 text-2xl tracking-[-0.036em] [&>div]:flex [&>div]:flex-col [&>div]:gap-2 [&_h2]:mb-1 [&_h2]:text-3xl [&_h2]:font-medium">
             <div>
               <p>
-                Ova platforma kroz proteklo desetljeće gurala je hrpu
-                raznovrsnih žanrova - od free jazz vratolomija preko prljavih
-                riffova iz grotla pakla do eterične elektronike i pop napjeva -
-                sve s namjerom da pokaže kako žanr sam po sebi više ne znači
-                puno. On danas ne odvaja scene, već ih isprepliće. Svi ljudi,
-                kolektivi, žanrovi i stilovi koji su godinama prošli KSET-ovom
-                pozornicom imaju ključnu stvar zajedničku - kroz umjetnost žele
-                otvoriti oči i uši prema rubnome. Onome što izmiče definiciji i
-                škaklja maštu.
+                Over the past decade, this platform has pushed a variety of
+                genres — from free jazz acrobatics and dirty riffs from the
+                depths of hell to ethereal electronics and pop tunes — all with
+                the intention of showing that genres themselves no longer mean
+                much. Today, they don&apos;t separate scenes but intertwine
+                them. All the people, collectives, genres, and styles that have
+                graced KSET&apos;s stage over the years have one key thing in
+                common — they aim to open eyes and ears to the fringe through
+                art. To what escapes definition and tickles the imagination.
               </p>
               <p>
-                ZEZ — Zavod za eksperimentalni zvuk 2023. godine slavio je svoju
-                10. obljetnicu. KSET-ov program nesvakidašnje glazbe i
-                avanturističkih pristupa zvuku obilježio je rođendan koncertima
-                i događanjima kroz čitavu godinu uz brojne programske suradnje.
-              </p>
-              <p>
-                Uz to, nezaobilazni ZEZ Festival zabrujio je u proljetnom
-                terminu od 3. do 6. svibnja, a Izložba zvuka, rezidencijalni
-                program i nova večer za mlade nade čudnovatog stvaralaštva
-                ostvarila se na jesen. Soundtrack slavljeničkoj godini pružila
-                je i nova ZEZ-ova radijska emisija u eteru Radio Studenta
+                ZEZ — the Institute for Experimental Sound celebrated its 10th
+                anniversary in 2023. KSET&apos;s program of unconventional music
+                and adventurous approaches to sound marked the occasion with
+                concerts and events throughout the year, alongside numerous
+                program collaborations. Additionally, the indispensable ZEZ
+                Festival resonated in the spring from May 3 to 6, and the Sound
+                Exhibition, a residency program, and a new evening for young
+                hopefuls of curious creation took place in the fall. The
+                celebratory year&apos;s soundtrack was also provided by a new
+                ZEZ radio show on Radio Student.
               </p>
             </div>
-            <div>
-              <h2>About the project</h2>
-              <p>
-                In celebration of Zavod za eksperimentalni zvuk&apos;s (ZEZ)
-                10th anniversary in 2023, ZEZ team and design-research
-                collective DISKO, set out to create a visual language and system
-                to be used throughout the year, suitable for various materials:
-                festivals, concerts, residencies, workshops, and exhibitions.
-                The goal was to encapsulate the essence of experimental music
-                through a dynamic and versatile visual representation.
-              </p>
-              <p>
-                Using coding techniques, a system of lines inspired by various
-                types of music were developed. These lines vary in shape and
-                color, as well as in their movement — whether slow, fast,
-                vibrating, or flickering — to characterize different groups of
-                music genres.
-              </p>
-            </div>
+
             <div>
               <h2>About the website</h2>
               <p>
-                The ZEZ website features an interactive image generator. This
-                tool allows you to experiment with different characterizations
-                of lines that symbolize music genres, enabling you to create
-                your own unique ZEZ experimental music image. Whether
-                you&apos;re a fan of ambient drones or high-energy noise, you
-                can explore the intersection of visual art and sound through
-                this creative platform.
+                To celebrate ZEZ&apos;s 10th anniversary in 2023, ZEZ and the
+                design-research collective DISKO developed a new visual language
+                for festivals, concerts, residencies, workshops, and
+                exhibitions. Code was used to design a program that generates a
+                system of lines to represent the diversity and experimental
+                nature of the ZEZ festival.
               </p>
               <p>
-                We invite you to immerse yourself in the world of experimental
-                music and art by generating images that resonate with your
-                interpretation of the genre. Share your ZEZ image on Instagram
-                and tag @zezfestival to contribute to our online depository,
-                showcasing the diverse and vibrant community of experimental
-                music enthusiasts. Your creations will help build a collective
-                visual celebration of ZEZ&apos;s journey and impact.
+                These lines vary in shape and color, as well as in their
+                movement — whether slow, fast, vibrating, or flickering — to
+                characterize different music genres. The main visual for ZEZ,
+                which visualizes all genres, celebrates the festival&apos;s 10th
+                anniversary, providing a venue for listening to and expressing
+                the unconventional.
+              </p>
+              <p>
+                Eight parameters influence the visual outcome of the image
+                generator: 1. Selection of one of the five line types, 2. Bundle
+                size—the number of lines emerging from a single bundle, 3. Speed
+                of line movement, 4. Line weight—the thickness of the line, 5.
+                Line discontinuity—whether the line is dashed or solid, 6.
+                Amplitude—the intensity of line movement, 7. Line color, and 8.
+                Background color.
+              </p>
+              <p>
+                This program was incorporated into the ZEZ website, allowing
+                everyone to experiment with these parameters and create their
+                own unique ZEZ visuals. We invite you to immerse yourself in the
+                world of experimental music and art by generating images that
+                resonate with your interpretation of the genre.
+              </p>
+              <p>
+                Share your ZEZ image on Instagram and tag @zezfestival to
+                contribute to our online depository, showcasing the diverse and
+                vibrant community of experimental music enthusiasts. Your
+                creations will help build a collective visual celebration of
+                ZEZ&apos;s journey and impact.
               </p>
             </div>
+
             <div>
-              <h2>Credits</h2>
+              <h2>Credits (ZEZ &apos;23)</h2>
               <p>
-                ZEZ team: Nina Maštruko ?
+                Public Relations: Ivan Odak, Marjan Klišanin, Nina Maštruko,
+                KSET PR team
                 <br />
-                Brand identity: DISKO (Andreja Lovreković, Martina Petric, Ela
-                Meseldžić)
+                Organisation: Luka Babić, Mirna Čupić, Patrik Klepić, Vid
+                Marinović, Nina Maštruko, Tin Miletić, Matija Resman
+                <br />
+                Production: KSET music section
+                <br />
+                Brand identity: Martina Petric, Ela Meseldžić, Andreja
+                Lovreković
+                <br />
+                Photograhy: Palma Poljaković
+                <br />
+                Web development: Josip Igrec
                 <br />
                 Image generator program: Dražen Hižak
                 <br />
-                Web development: Josip Igrec
+                Typography: Dwight (Lift type)
               </p>
             </div>
           </div>

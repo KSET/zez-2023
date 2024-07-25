@@ -113,7 +113,7 @@ const GeneratorDropdown = () => {
         }}
       />
       {isOpen ? (
-        <div className="absolute left-0 z-50 flex flex-col gap-4 rounded-[30px] border-4 border-off-black bg-white px-8 py-4 text-base font-medium">
+        <div className="absolute left-0 z-50 flex flex-col gap-4 rounded-[30px] border-4 border-off-black bg-white p-8 text-base font-medium">
           <GeneratorControls>
             <DownloadAnimationForm>
               <Button className="p-1.5 font-semibold uppercase" type="submit">

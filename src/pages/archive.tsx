@@ -205,7 +205,7 @@ const ArtistsList = () => {
         return (
           <article
             key={artist.id}
-            className="flex scroll-m-16 flex-col gap-4 gap-y-10 text-2xl tracking-[-0.036em] max-br:gap-y-4 max-br:text-base max-br:leading-5 br:grid br:grid-cols-[1fr_371px]"
+            className="flex scroll-m-16 flex-col gap-4 gap-y-10 text-2xl tracking-[-0.036em] max-br:gap-y-4 max-br:text-base max-br:leading-5 br:grid br:grid-cols-[56rem_1fr]"
             id={escapeSelector(`artist-${artist.name}`)}
           >
             <div className="order-1 col-span-full max-br:order-2 br:mb-6">
@@ -234,7 +234,7 @@ const ArtistsList = () => {
             <AppImage
               alt={artist.name}
               aspectRatio={325 / 260}
-              className="order-3 rounded-[30px] max-br:order-1 br:row-span-2"
+              className="order-3 overflow-hidden rounded-[30px] max-br:order-1 br:row-span-2"
               lazySrc={artist.image.blurDataURL}
               src={artist.image.src}
               observerOptions={{
