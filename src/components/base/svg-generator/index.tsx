@@ -44,6 +44,7 @@ export const bandDataValidator = z.object({
   strokeWidth: z.number(),
   dashWidth: z.number(),
   color: colorValidator,
+  position: z.number(),
 });
 export type BandData = z.infer<typeof bandDataValidator>;
 
@@ -51,53 +52,61 @@ const _backgroundColorAtom = atom<BackgroundColor>(backgroundColors[0]);
 
 export const backgroundColorAtom = atom((get) => get(_backgroundColorAtom));
 
-const bandDataAtom = atom<BandData[]>([
-  {
-    id: "band-0",
-    nSubBands: 2,
-    speed: 45,
-    amplitude: 9,
-    color: "#f39",
-    strokeWidth: 75,
-    dashWidth: 0,
-  },
-  {
-    id: "band-1",
-    nSubBands: 1,
-    speed: 12,
-    amplitude: 15,
-    color: "#0c0",
-    strokeWidth: 276,
-    dashWidth: 0,
-  },
-  {
-    id: "band-2",
-    nSubBands: 72,
-    speed: 31,
-    amplitude: 19,
-    color: "#001cce",
-    strokeWidth: 1,
-    dashWidth: 0,
-  },
-  {
-    id: "band-3",
-    nSubBands: 4,
-    speed: 34,
-    amplitude: 6,
-    color: "#ff7900",
-    strokeWidth: 113,
-    dashWidth: 0,
-  },
-  {
-    id: "band-4",
-    nSubBands: 4,
-    speed: 50,
-    amplitude: 9,
-    color: "#a010fd",
-    strokeWidth: 12,
-    dashWidth: 0,
-  },
-]);
+const bandDataAtom = atom<BandData[]>(
+  [
+    {
+      id: "band-0",
+      nSubBands: 2,
+      speed: 45,
+      amplitude: 9,
+      color: "#f39",
+      strokeWidth: 75,
+      dashWidth: 0,
+    },
+    {
+      id: "band-1",
+      nSubBands: 1,
+      speed: 12,
+      amplitude: 15,
+      color: "#0c0",
+      strokeWidth: 276,
+      dashWidth: 0,
+    },
+    {
+      id: "band-2",
+      nSubBands: 72,
+      speed: 31,
+      amplitude: 19,
+      color: "#001cce",
+      strokeWidth: 1,
+      dashWidth: 0,
+    },
+    {
+      id: "band-3",
+      nSubBands: 4,
+      speed: 34,
+      amplitude: 6,
+      color: "#ff7900",
+      strokeWidth: 113,
+      dashWidth: 0,
+    },
+    {
+      id: "band-4",
+      nSubBands: 4,
+      speed: 50,
+      amplitude: 9,
+      color: "#a010fd",
+      strokeWidth: 12,
+      dashWidth: 0,
+    },
+  ].map(
+    (b, i, arr) =>
+      ({
+        ...b,
+        position: (i / arr.length) * 100,
+      } as BandData),
+  ),
+);
 
 type AnimationProps = {
   duration: Property.AnimationDuration;
@@ -231,6 +240,13 @@ type SvgBandRawProps = {
   nBands: number;
 };
 export const SvgBandRaw = ({ band, nBands, ...props }: SvgBandRawProps) => {
+  const start =
+    band.position > 0
+      ? new Point({
+          x: 0,
+          y: (band.position / 100 + 0.1) * props.height,
+        })
+      : props.start;
   return (
     <>
       {Array.from({ length: band.nSubBands }, (_, i) => i).map((subBandI) => {
@@ -241,7 +257,7 @@ export const SvgBandRaw = ({ band, nBands, ...props }: SvgBandRawProps) => {
             key={`${band.id}-${subBandI}`}
             bandData={band}
             rand={props.rand}
-            start={props.start}
+            start={start}
             strokeDasharray={band.dashWidth > 0 ? [band.dashWidth] : undefined}
             animations={{
               dashes: {
@@ -258,34 +274,34 @@ export const SvgBandRaw = ({ band, nBands, ...props }: SvgBandRawProps) => {
                 x:
                   props.height / 2 -
                   (props.height * props.rand.quick()) / nBands,
-                y: props.start.y - props.height * (band.amplitude / 25),
+                y: start.y - props.height * (band.amplitude / 25),
               },
               {
                 x:
                   props.height / 2 +
                   (props.height * props.rand.quick()) / nBands,
-                y: props.start.y + props.height * (band.amplitude / 25),
+                y: start.y + props.height * (band.amplitude / 25),
               },
               {
                 x: props.width,
-                y: props.start.y,
+                y: start.y,
               },
 
               {
                 x:
                   props.height / 2 -
                   (props.height * props.rand.quick()) / nBands,
-                y: props.start.y + props.height * (band.amplitude / 25),
+                y: start.y + props.height * (band.amplitude / 25),
               },
               {
                 x:
                   props.height / 2 +
                   (props.height * props.rand.quick()) / nBands,
-                y: props.start.y - props.height * (band.amplitude / 25),
+                y: start.y - props.height * (band.amplitude / 25),
               },
               {
                 x: props.width,
-                y: props.start.y,
+                y: start.y,
               },
             ]}
             style={{
@@ -317,7 +333,6 @@ export const SvgBands = ({
   const N_BANDS = useAtomValue(
     useMemo(() => atom((get) => get(bandDataAtom).length), []),
   );
-  const bandHeight = height / N_BANDS;
   const backgroundColor = useAtomValue(backgroundColorAtom);
 
   const rand = Seedrandom(randSeed);
@@ -344,7 +359,7 @@ export const SvgBands = ({
           start={
             new Point({
               x: 0,
-              y: bandHeight * bandI + bandHeight / 2,
+              y: (height / N_BANDS) * (bandI + 0.5),
             })
           }
         />
@@ -374,7 +389,6 @@ export const SvgBandsRaw = ({
   ...props
 }: SvgBandsRawProps) => {
   const rand = Seedrandom(randSeed);
-  const bandHeight = height / bands.length;
 
   return (
     <svg
@@ -401,7 +415,9 @@ export const SvgBandsRaw = ({
           start={
             new Point({
               x: 0,
-              y: bandHeight * bandI + bandHeight / 2,
+              y:
+                band.position * height ||
+                (height / bands.length) * (bandI + 0.5),
             })
           }
         />
@@ -444,10 +460,15 @@ export const DownloadAnimationForm = ({
   );
 };
 
+const randBetween = (min: number, max: number, rand: PRNG) => {
+  return min + (max - min) * rand.quick();
+};
+
 export const GeneratorControls = ({ children }: { children?: ReactNode }) => {
   const [bandData, setBandData] = useAtom(bandDataAtom);
   const [selectedBand, setSelectedBand] = useState(0);
   const [backgroundColor, setBackgroundColor] = useAtom(_backgroundColorAtom);
+  const rand = useMemo(() => Seedrandom(), []);
 
   const selectedBandData = bandData[selectedBand];
 
@@ -465,6 +486,32 @@ export const GeneratorControls = ({ children }: { children?: ReactNode }) => {
     [selectedBand, setBandData],
   );
 
+  const addLine = () => {
+    setBandData((b) => [
+      ...b,
+      {
+        id: `band-${b.length}`,
+        nSubBands: randBetween(1, 50, rand),
+        speed: randBetween(1, 50, rand),
+        amplitude: randBetween(1, 25, rand),
+        color: colors[Math.round(Math.random() * colors.length)]!,
+        strokeWidth: randBetween(1, 100, rand),
+        dashWidth: rand.quick() > 0.5 ? 0 : randBetween(1, 100, rand),
+        position: randBetween(0, 100, rand),
+      },
+    ]);
+  };
+
+  const removeLine = () => {
+    if (bandData.length > 1) {
+      if (selectedBand >= bandData.length - 1) {
+        setSelectedBand(() => bandData.length - 2);
+      }
+
+      setBandData((b) => b.filter((_, i) => i !== bandData.length - 1));
+    }
+  };
+
   if (!selectedBandData) {
     return null;
   }
@@ -473,13 +520,22 @@ export const GeneratorControls = ({ children }: { children?: ReactNode }) => {
     <>
       <div className="flex flex-col gap-2">
         <h2 className="uppercase">Line</h2>
-        <div className="flex justify-start gap-1.5">
+        <div className="flex flex-wrap justify-start gap-1.5">
+          <button
+            className="h-[32px] min-w-[26px] scale-110 cursor-pointer items-center rounded-[15px] border-[3px] border-off-black bg-white px-0.5 pb-1 text-center align-middle text-[23px] font-bold leading-none"
+            type="button"
+            onClick={() => {
+              removeLine();
+            }}
+          >
+            <span className="-mt-px block">-</span>
+          </button>
           {bandData.map((_, i) => (
             <div
               // eslint-disable-next-line react/no-array-index-key
               key={i}
               className={cn(
-                "box-content aspect-[3/4] h-[1em] cursor-pointer items-center rounded-full border-[5px] border-off-black bg-white text-center align-middle text-3xl font-bold leading-none",
+                "h-[32px] min-w-[26px] scale-110 cursor-pointer items-center rounded-[15px] border-[3px] border-off-black bg-white px-0.5 pb-1 text-center align-middle text-[23px] font-bold leading-none",
                 selectedBand === i && "!bg-off-black !text-white",
               )}
               onClick={() => setSelectedBand(i)}
@@ -487,6 +543,15 @@ export const GeneratorControls = ({ children }: { children?: ReactNode }) => {
               {i + 1}
             </div>
           ))}
+          <button
+            className="h-[32px] min-w-[26px] scale-110 cursor-pointer items-center rounded-[15px] border-[3px] border-off-black bg-white px-0.5 pb-1 pt-px text-center align-middle text-[23px] font-bold leading-none"
+            type="button"
+            onClick={() => {
+              addLine();
+            }}
+          >
+            <span className="-mt-px block">+</span>
+          </button>
         </div>
       </div>
 
@@ -547,6 +612,18 @@ export const GeneratorControls = ({ children }: { children?: ReactNode }) => {
           type="range"
           value={selectedBandData.amplitude}
           onChange={(e) => setProp("amplitude", Number(e.target.value))}
+        />
+      </label>
+
+      <label className="flex flex-col gap-2">
+        <span className="uppercase">Position</span>
+        <input
+          className="h-0.5 appearance-none bg-off-black accent-off-black"
+          max={100}
+          min={0}
+          type="range"
+          value={selectedBandData.position}
+          onChange={(e) => setProp("position", Number(e.target.value))}
         />
       </label>
 
