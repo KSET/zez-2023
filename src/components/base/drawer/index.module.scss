@@ -1,5 +1,5 @@
 .root {
-  @apply fixed bottom-0 left-0 right-0 top-0 translate-x-full transform transition-transform br:hidden;
+  @apply fixed bottom-0 left-0 right-0 top-0 translate-x-full transform transition-transform br:hidden z-50;
 
   &:global(.app-drawer-open) {
     @apply translate-x-0;
